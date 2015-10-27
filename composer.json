@@ -1,0 +1,32 @@
+{
+  "name": "dez-php/dez-mvc-app",
+  "description": "MVC Application",
+  "keywords": ["php mvc","mvc","mvc app","dez-php mvc"],
+  "authors": [
+    {
+      "name": "Ivan Gontarenko",
+      "email": "vania.gontarenko@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "type": "library",
+  "require": {
+    "php": ">=5.5",
+    "dez-php/dez-di": ">=1.0",
+    "dez-php/dez-loader": ">=1.0",
+    "dez-php/dez-configuration": ">=1.0",
+    "dez-php/dez-orm": ">=1.0",
+    "dez-php/dez-event": ">=1.0",
+    "dez-php/dez-http": ">=1.0",
+    "dez-php/dez-url": ">=1.0",
+    "dez-php/dez-router": ">=1.0",
+    "dez-php/dez-session": ">=1.0",
+    "dez-php/dez-view": ">=1.0",
+    "dez-php/dez-auth": ">=1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Dez\\Application\\": "src/Mvc"
+    }
+  }
+}
