@@ -29,6 +29,7 @@
         /**
          * @return Controller|null
          * @throws MvcException
+         * @throws \Exception
          */
         public function dispatch() {
 
@@ -49,6 +50,7 @@
                         static::$di->get( 'event' )->dispatch( 'afterActionRun', new MvcEvent( $controller ) );
                     } catch ( \Exception $exception ) {
                         static::$di->get( 'event' )->dispatch( 'onActionRuntimeError', new MvcEvent( $exception ) );
+                        throw $exception;
                     }
                 } else {
                     throw new MvcException( "Method '{$action}' in controller '{$controllerClass}' not found" );
