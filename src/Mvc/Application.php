@@ -44,6 +44,12 @@
             $this->setDi( FactoryContainer::instance() );
         }
 
+        /**
+         * @return Response
+         * @throws ControllerException
+         * @throws \Dez\EventDispatcher\Exception
+         * @throws \Exception
+         */
         public function run()
         {
             $this->event->dispatch( 'beforeApplicationRun', new MvcEvent( $this ) );
@@ -66,9 +72,9 @@
             $dispatcher->dispatch();
 
             $this->view->addLayout( "layouts/{$router->getController()}" );
-            $this->view->addLayout( "{$router->getController()}/{$router->getAction()}" );
+            $content    = $this->view->render( "{$router->getController()}/{$router->getAction()}" );
 
-            $this->response->setContent( $this->view->render() );
+            $this->response->setContent( $content );
 
             $this->event->dispatch( 'afterApplicationRun', new MvcEvent( $this ) );
             return $this->response;

@@ -8,6 +8,7 @@
     use Dez\Http\Response;
     use Dez\Router\Router;
     use Dez\Session\Adapter\Files;
+    use Dez\View\View;
 
     class FactoryContainer extends Container {
 
@@ -29,6 +30,9 @@
                 },
                 'session'   => function() {
                     return new Files();
+                },
+                'view'   => function() {
+                    return new View();
                 },
             ];
 
