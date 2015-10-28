@@ -68,10 +68,10 @@
 
                 $dispatcher = new ControllerDispatcher( $this->getDi() );
 
-                $dispatcher->setName( $router->getController() );
+                $dispatcher->setController( $router->getController() );
                 $dispatcher->setAction( $router->getAction() );
                 $dispatcher->setParams( $router->getMatches() );
-
+                
                 try {
                     $dispatcher->dispatch();
 
@@ -100,7 +100,7 @@
                     call_user_func_array( $this->getPage404Handler(), [ $this ] );
                     $this->response->setContent( $this->view->render( 'error_404.php' ) );
                 } else {
-                    throw new MvcException( "Page {$this->request->getServer( 'request_uri' )} not found" );
+                    throw new MvcException( "Page {$router->getTargetUri()} not found" );
                 }
             }
 

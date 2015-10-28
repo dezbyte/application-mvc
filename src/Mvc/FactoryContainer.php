@@ -4,6 +4,7 @@
 
     use Dez\Config\Config;
     use Dez\DependencyInjection\Container;
+    use Dez\DependencyInjection\Service;
     use Dez\EventDispatcher\Dispatcher;
     use Dez\Http\Cookies;
     use Dez\Http\Request;
@@ -19,34 +20,18 @@
             parent::__construct();
 
             $this->services = [
-                'loader'    => function() {
-                    return new Loader();
-                },
-                'config'    => function() {
-                    return new Config( [] );
-                },
-                'event'    => function() {
-                    return new Dispatcher();
-                },
-                'request'   => function() {
-                    return new Request();
-                },
-                'response'  => function() {
-                    return new Response();
-                },
-                'cookies'  => function() {
-                    return new Cookies();
-                },
-                'router'  => function() {
-                    return new Router();
-                },
-                'session'   => function() {
-                    return new Files();
-                },
-                'view'   => function() {
-                    return new View();
-                },
+                'loader'        => new Service( 'loader', new Loader() ),
+                'config'        => new Service( 'config', new Config( [] ) ),
+                'event'         => new Service( 'event', new Dispatcher() ),
+                'request'       => new Service( 'request', new Request() ),
+                'response'      => new Service( 'response', new Response() ),
+                'cookies'       => new Service( 'cookies', new Cookies() ),
+                'router'        => new Service( 'router', new Router() ),
+                'session'       => new Service( 'session', new Files() ),
+                'view'          => new Service( 'view', new View() ),
             ];
+
+            $this->services['eventDispatcher']  = $this->services['event'];
 
         }
 

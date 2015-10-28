@@ -79,17 +79,17 @@
         }
 
         /**
-         * @return Controller
+         * @return string
          */
         public function getController() {
             return ucfirst( strtolower( $this->controller ) ) . 'Controller';
         }
 
         /**
-         * @param mixed $controller
+         * @param string $controller
          * @return static
          */
-        public function setController( Controller $controller) {
+        public function setController( $controller) {
             $this->controller = $controller;
             return $this;
         }
