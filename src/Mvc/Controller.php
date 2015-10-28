@@ -2,7 +2,7 @@
 
     namespace Dez\Mvc;
 
-    use Dez\Mvc\Controller\ControllerException;
+    use Dez\Mvc\Controller\MvcException;
     use Dez\Mvc\Controller\ControllerInterface;
     use Dez\DependencyInjection\ContainerInterface;
 
@@ -22,7 +22,7 @@
             if( static::$container->has( $name ) ) {
                 return static::$container->get( $name );
             } else {
-                throw new ControllerException( "Service '{$name}' not found on default container" );
+                throw new MvcException( "Service '{$name}' not found on default container" );
             }
 
         }

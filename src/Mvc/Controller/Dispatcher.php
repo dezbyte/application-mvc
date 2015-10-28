@@ -26,8 +26,13 @@
             static::$di     = $di;
         }
 
+        /**
+         * @return Controller|null
+         * @throws MvcException
+         */
         public function dispatch() {
 
+            $controller         = null;
             $controllerClass    = $this->getNamespace() . $this->getController();
 
             if( class_exists( $controllerClass ) ) {
@@ -39,14 +44,20 @@
                     static::$di->get( 'event' )->dispatch( 'beforeActionRun', new MvcEvent( $controller ) );
 
                     try {
+                        $controller->setDi( static::$di );
                         call_user_func_array( [ $controller, $action ], $this->getParams() );
                         static::$di->get( 'event' )->dispatch( 'afterActionRun', new MvcEvent( $controller ) );
                     } catch ( \Exception $exception ) {
                         static::$di->get( 'event' )->dispatch( 'onActionRuntimeError', new MvcEvent( $exception ) );
                     }
+                } else {
+                    throw new MvcException( "Method '{$action}' in controller '{$controllerClass}' not found" );
                 }
+            } else {
+                throw new MvcException( "Controller class '{$controllerClass}' not found" );
             }
 
+            return $controller;
         }
 
         /**

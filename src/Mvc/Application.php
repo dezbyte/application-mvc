@@ -11,7 +11,7 @@
     use Dez\Http\Request;
     use Dez\Http\Response;
     use Dez\Loader\Loader;
-    use Dez\Mvc\Controller\ControllerException;
+    use Dez\Mvc\Controller\MvcException;
     use Dez\Router\Router;
     use Dez\Session\Adapter;
     use Dez\View\View;
@@ -41,6 +41,8 @@
 
         protected $page404Handler;
 
+        protected $errorHandler;
+
         protected $controllerNamespace  = '\\App\\';
 
         public function __construct()
@@ -50,7 +52,7 @@
 
         /**
          * @return Response
-         * @throws ControllerException
+         * @throws MvcException
          * @throws \Dez\EventDispatcher\Exception
          * @throws \Exception
          */
@@ -70,15 +72,25 @@
                 $dispatcher->setAction( $router->getAction() );
                 $dispatcher->setParams( $router->getMatches() );
 
-                $dispatcher->dispatch();
+                try {
+                    $dispatcher->dispatch();
 
-                $this->view->addLayout( "layouts/{$router->getController()}" );
-                $content    = $this->view->render( "{$router->getController()}/{$router->getAction()}" );
+                    $this->view->addLayout( "layouts/{$router->getController()}" );
+                    $content    = $this->view->render( "{$router->getController()}/{$router->getAction()}" );
 
-                $this->response->setContent( $content );
+                    $this->response->setContent( $content );
 
-                $this->event->dispatch( 'afterApplicationRun', new MvcEvent( $this ) );
+                    $this->event->dispatch( 'afterApplicationRun', new MvcEvent( $this ) );
+                } catch ( \Exception $exception ) {
+                    $this->response->setStatusCode( 500 );
 
+                    if( $this->getErrorHandler() instanceof \Closure ) {
+                        call_user_func_array( $this->getErrorHandler(), [ $this ] );
+                        $this->response->setContent( $this->view->render( 'internal_error.php' ) );
+                    } else {
+                        throw $exception;
+                    }
+                }
 
             } else {
                 $this->event->dispatch( 'onPageNotFound', new MvcEvent( $this ) );
@@ -86,9 +98,9 @@
 
                 if( $this->getPage404Handler() instanceof \Closure ) {
                     call_user_func_array( $this->getPage404Handler(), [ $this ] );
-                    $this->response->setContent( $this->view->render( 'error404.php' ) );
+                    $this->response->setContent( $this->view->render( 'error_404.php' ) );
                 } else {
-                    throw new ControllerException( "Page {$this->request->getServer( 'request_uri' )} not found" );
+                    throw new MvcException( "Page {$this->request->getServer( 'request_uri' )} not found" );
                 }
             }
 
@@ -110,6 +122,24 @@
         public function setPage404Handler( \Closure $page404Handler )
         {
             $this->page404Handler = \Closure::bind( $page404Handler, $this );
+            return $this;
+        }
+
+        /**
+         * @return \Closure
+         */
+        public function getErrorHandler()
+        {
+            return $this->errorHandler;
+        }
+
+        /**
+         * @param mixed $errorHandler
+         * @return \Closure
+         */
+        public function setErrorHandler( \Closure $errorHandler )
+        {
+            $this->errorHandler = \Closure::bind( $errorHandler, $this );
             return $this;
         }
 
