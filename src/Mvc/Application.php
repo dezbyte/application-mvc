@@ -41,6 +41,8 @@
 
         protected $page404Handler;
 
+        protected $controllerNamespace  = '\\App\\';
+
         public function __construct()
         {
             $this->setDi( FactoryContainer::instance() );
@@ -108,6 +110,24 @@
         public function setPage404Handler( \Closure $page404Handler )
         {
             $this->page404Handler = \Closure::bind( $page404Handler, $this );
+            return $this;
+        }
+
+        /**
+         * @return string
+         */
+        public function getControllerNamespace()
+        {
+            return $this->controllerNamespace;
+        }
+
+        /**
+         * @param string $controllerNamespace
+         * @return static
+         */
+        public function setControllerNamespace($controllerNamespace)
+        {
+            $this->controllerNamespace = $controllerNamespace;
             return $this;
         }
 

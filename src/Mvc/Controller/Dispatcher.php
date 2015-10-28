@@ -2,30 +2,74 @@
 
     namespace Dez\Mvc\Controller;
 
+    use Dez\DependencyInjection\Container;
     use Dez\DependencyInjection\ContainerInterface;
     use Dez\Mvc\Controller;
+    use Dez\Mvc\MvcEvent;
 
     class Dispatcher {
 
-        protected $controller;
+        protected $namespace;
 
-        protected $name;
+        protected $controller;
 
         protected $action;
 
         protected $params   = [];
 
+        /**
+         * @var Container
+         */
         static protected $di;
 
         public function __construct( ContainerInterface $di ) {
             static::$di     = $di;
         }
 
+        public function dispatch() {
+
+            $controllerClass    = $this->getNamespace() . $this->getController();
+
+            if( class_exists( $controllerClass ) ) {
+                /** @var Controller $controller */
+                $controller     = new $controllerClass();
+                $action         = $this->getAction();
+
+                if( method_exists( $controller, $action ) ) {
+                    static::$di->get( 'event' )->dispatch( 'beforeActionRun', new MvcEvent( $controller ) );
+
+                    try {
+                        call_user_func_array( [ $controller, $action ], $this->getParams() );
+                        static::$di->get( 'event' )->dispatch( 'afterActionRun', new MvcEvent( $controller ) );
+                    } catch ( \Exception $exception ) {
+                        static::$di->get( 'event' )->dispatch( 'onActionRuntimeError', new MvcEvent( $exception ) );
+                    }
+                }
+            }
+
+        }
+
+        /**
+         * @return mixed
+         */
+        public function getNamespace() {
+            return $this->namespace;
+        }
+
+        /**
+         * @param mixed $namespace
+         * @return static
+         */
+        public function setNamespace( $namespace ) {
+            $this->namespace = $namespace;
+            return $this;
+        }
+
         /**
          * @return Controller
          */
         public function getController() {
-            return $this->controller;
+            return ucfirst( strtolower( $this->controller ) ) . 'Controller';
         }
 
         /**
@@ -40,24 +84,8 @@
         /**
          * @return mixed
          */
-        public function getName() {
-            return $this->name;
-        }
-
-        /**
-         * @param mixed $name
-         * @return static
-         */
-        public function setName( $name ) {
-            $this->name = $name;
-            return $this;
-        }
-
-        /**
-         * @return mixed
-         */
         public function getAction() {
-            return $this->action;
+            return ucfirst( strtolower( $this->action ) ) . 'Action';
         }
 
         /**
@@ -83,13 +111,6 @@
         public function setParams( $params ) {
             $this->params = $params;
             return $this;
-        }
-
-        public function dispatch() {
-
-            $controllerName     = ucfirst( strtolower( $this->getName() ) ) . 'Controller';
-            $actionName         = ucfirst( strtolower( $this->getAction() ) ) . 'Action';
-
         }
 
     }
