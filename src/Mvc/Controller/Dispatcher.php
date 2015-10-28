@@ -87,6 +87,9 @@
 
         public function dispatch() {
 
+            $controllerName     = ucfirst( strtolower( $this->getName() ) ) . 'Controller';
+            $actionName         = ucfirst( strtolower( $this->getAction() ) ) . 'Action';
+
         }
 
     }

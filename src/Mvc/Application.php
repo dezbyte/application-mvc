@@ -53,6 +53,7 @@
             $router->handle();
 
             if( ! $router->isFounded() ) {
+                $this->event->dispatch( 'onPageNotFound', new MvcEvent( $this ) );
                 throw new ControllerException( 'Route not found' );
             }
 
@@ -63,6 +64,11 @@
             $dispatcher->setParams( $router->getMatches() );
 
             $dispatcher->dispatch();
+
+            $this->view->addLayout( "layouts/{$router->getController()}" );
+            $this->view->addLayout( "{$router->getController()}/{$router->getAction()}" );
+
+            $this->response->setContent( $this->view->render() );
 
             $this->event->dispatch( 'afterApplicationRun', new MvcEvent( $this ) );
             return $this->response;
