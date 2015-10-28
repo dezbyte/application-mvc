@@ -1,2 +1,2 @@
 # dez-app
-DezPHP - Full Application
+DezPHP - Full Mvc

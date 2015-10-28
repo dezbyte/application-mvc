@@ -1,9 +1,9 @@
 <?php
 
-    namespace Dez\Application;
+    namespace Dez\Mvc;
 
-    use Dez\Application\Controller\ControllerException;
-    use Dez\Application\Controller\ControllerInterface;
+    use Dez\Mvc\Controller\ControllerException;
+    use Dez\Mvc\Controller\ControllerInterface;
     use Dez\DependencyInjection\ContainerInterface;
 
     abstract class Controller implements ControllerInterface {

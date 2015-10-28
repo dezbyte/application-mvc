@@ -1,5 +1,5 @@
 <?php
 
-    namespace Dez\Application\Controller;
+    namespace Dez\Mvc\Controller;
 
     class ControllerException extends \Exception {  }

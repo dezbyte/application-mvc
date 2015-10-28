@@ -1,6 +1,6 @@
 <?php
 
-    namespace Dez\Application\Controller;
+    namespace Dez\Mvc\Controller;
 
     use Dez\Auth\Auth;
     use Dez\Config\Config;
