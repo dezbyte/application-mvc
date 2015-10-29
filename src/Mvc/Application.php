@@ -6,6 +6,7 @@
     use Dez\Auth\Auth;
     use Dez\Config\Config;
     use Dez\Db\Connection;
+    use Dez\DependencyInjection\Service;
     use Dez\EventDispatcher\Dispatcher;
     use Dez\Http\Cookies;
     use Dez\Http\Request;
@@ -62,6 +63,11 @@
             $this->router->add( '/:controller' );
             $this->router->add( '/:controller/:action' );
             $this->router->add( '/:controller/:action/:id' );
+
+            /** @var Service $service */
+            foreach( $this->dependencyInjector as $service ) {
+                $this->view->set( $service->getName(), $this->{ $service->getName() } );
+            }
 
             return $this;
         }

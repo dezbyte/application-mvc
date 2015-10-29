@@ -3,4 +3,7 @@
     tada...
     <br>
     ID: <?= $id ?>
+
+    <a href="<?= $url->create( 'users:item', [ 'id' => $id ] ) ?>">link</a>
+
 </div>

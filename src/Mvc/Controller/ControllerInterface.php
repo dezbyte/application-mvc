@@ -13,6 +13,7 @@
     use Dez\Loader\Loader;
     use Dez\Router\Router;
     use Dez\Session\Adapter;
+    use Dez\Url\Url;
     use Dez\View\View;
 
     /**
@@ -28,6 +29,7 @@
      * @property View view
      * @property Connection db
      * @property Auth auth
+     * @property Url url
      */
 
     interface ControllerInterface extends InjectableInterface {

@@ -24,6 +24,8 @@
         $app->config['application']['autoload']->toArray()
     )->register();
 
+    $app->url->setBasePath( $app->config['application']['basePath'] );
+
     $app->view
         ->setViewDirectory( $app->config['application']['viewDirectory'] )
         ->registerEngine( '.php', new Php( $app->view ) );
