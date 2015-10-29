@@ -3,8 +3,8 @@
 return [
     'application'   => [
 
-        'staticPath'    => '/dez-mvc-app/test_app/',
-        'basePath'      => '/dez-mvc-app/test_app/',
+        'staticPath'    => '/_/dez-mvc-app/test_app/',
+        'basePath'      => '/_/dez-mvc-app/test_app/',
 
         'autoload'              => [
             'App\\Controller'     => __DIR__ . '/../controllers',
