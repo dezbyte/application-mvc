@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "25082747f4a5bd1d14dda76f628084c6",
+    "hash": "ca3ba75aeda082dfc596da67071eda63",
     "packages": [
         {
             "name": "dez-php/dez-auth",
@@ -527,16 +527,16 @@
         },
         {
             "name": "dez-php/dez-view",
-            "version": "v1.0.2",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dez-php/dez-view.git",
-                "reference": "7a89fc5fcf3a899539f666198b9c303e99ab2d4f"
+                "reference": "8d9b766ea37d70b1af0b326986073e0b894b6cdc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dez-php/dez-view/zipball/7a89fc5fcf3a899539f666198b9c303e99ab2d4f",
-                "reference": "7a89fc5fcf3a899539f666198b9c303e99ab2d4f",
+                "url": "https://api.github.com/repos/dez-php/dez-view/zipball/8d9b766ea37d70b1af0b326986073e0b894b6cdc",
+                "reference": "8d9b766ea37d70b1af0b326986073e0b894b6cdc",
                 "shasum": ""
             },
             "require": {
@@ -567,7 +567,7 @@
                 "php view",
                 "view"
             ],
-            "time": "2015-10-10 12:30:53"
+            "time": "2015-10-28 12:41:55"
         }
     ],
     "packages-dev": [],
