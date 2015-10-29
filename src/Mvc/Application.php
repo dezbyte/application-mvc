@@ -14,6 +14,7 @@
     use Dez\Mvc\Controller\MvcException;
     use Dez\Router\Router;
     use Dez\Session\Adapter;
+    use Dez\Url\Url;
     use Dez\View\View;
 
     use Dez\Mvc\Controller\Dispatcher as ControllerDispatcher;
@@ -32,6 +33,7 @@
      * @property Response response
      * @property Adapter session
      * @property Router router
+     * @property Url url
      * @property View view
      * @property Connection db
      * @property Auth auth
@@ -43,11 +45,25 @@
 
         protected $errorHandler;
 
-        protected $controllerNamespace  = '\\App\\';
+        protected $controllerNamespace  = '\\App\\Controller\\';
 
         public function __construct()
         {
             $this->setDi( FactoryContainer::instance() );
+            $this->initialize();
+        }
+
+        /**
+         * @return $this
+         */
+        public function initialize()
+        {
+            $this->router->add( '/' );
+            $this->router->add( '/:controller' );
+            $this->router->add( '/:controller/:action' );
+            $this->router->add( '/:controller/:action/:id' );
+
+            return $this;
         }
 
         /**
@@ -68,6 +84,7 @@
 
                 $dispatcher = new ControllerDispatcher( $this->getDi() );
 
+                $dispatcher->setNamespace( $this->getControllerNamespace() );
                 $dispatcher->setController( $router->getController() );
                 $dispatcher->setAction( $router->getAction() );
                 $dispatcher->setParams( $router->getMatches() );
