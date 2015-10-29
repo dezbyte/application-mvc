@@ -68,7 +68,7 @@
 
                 $dispatcher = new ControllerDispatcher( $this->getDi() );
 
-                $dispatcher->setName( $router->getController() );
+                $dispatcher->setController( $router->getController() );
                 $dispatcher->setAction( $router->getAction() );
                 $dispatcher->setParams( $router->getMatches() );
 
