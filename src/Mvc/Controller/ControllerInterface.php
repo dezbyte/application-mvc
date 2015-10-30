@@ -15,6 +15,7 @@
     use Dez\Session\Adapter;
     use Dez\Url\Url;
     use Dez\View\View;
+    use Dez\Flash\Adapter as Flash;
 
     /**
      * @property Loader loader
@@ -30,6 +31,7 @@
      * @property Connection db
      * @property Auth auth
      * @property Url url
+     * @property Flash flash
      */
 
     interface ControllerInterface extends InjectableInterface {

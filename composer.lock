@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ca3ba75aeda082dfc596da67071eda63",
+    "hash": "2f061b06cd93f7bf97bf4d909a68971f",
     "packages": [
         {
             "name": "dez-php/dez-auth",
-            "version": "v1.1.1",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dez-php/dez-auth.git",
-                "reference": "1bc3a93bad60dab65f643f95102d6f7b8497de92"
+                "reference": "0437a7e0f020fe03973e42b0ee5e13948754bd42"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dez-php/dez-auth/zipball/1bc3a93bad60dab65f643f95102d6f7b8497de92",
-                "reference": "1bc3a93bad60dab65f643f95102d6f7b8497de92",
+                "url": "https://api.github.com/repos/dez-php/dez-auth/zipball/0437a7e0f020fe03973e42b0ee5e13948754bd42",
+                "reference": "0437a7e0f020fe03973e42b0ee5e13948754bd42",
                 "shasum": ""
             },
             "require": {
@@ -49,7 +49,7 @@
                 "dez-php auth",
                 "php auth"
             ],
-            "time": "2015-10-27 10:25:48"
+            "time": "2015-10-30 10:45:40"
         },
         {
             "name": "dez-php/dez-collection",
@@ -264,6 +264,49 @@
             "time": "2015-09-09 11:26:22"
         },
         {
+            "name": "dez-php/dez-flash",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dez-php/dez-flash.git",
+                "reference": "b771b311e7eef57ea7657cd72e540fd4756fac79"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dez-php/dez-flash/zipball/b771b311e7eef57ea7657cd72e540fd4756fac79",
+                "reference": "b771b311e7eef57ea7657cd72e540fd4756fac79",
+                "shasum": ""
+            },
+            "require": {
+                "dez-php/dez-di": ">=1.0.0",
+                "dez-php/dez-session": ">=1.0.0",
+                "php": ">=5.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Dez\\Flash\\": "src/Flash"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Gontarenko",
+                    "email": "vania.gontarenko@gmail.com"
+                }
+            ],
+            "description": "Flash Messages Component",
+            "keywords": [
+                "dez-php flash",
+                "flash",
+                "php flash"
+            ],
+            "time": "2015-10-30 20:48:13"
+        },
+        {
             "name": "dez-php/dez-http",
             "version": "v1.1.0",
             "source": {
@@ -394,16 +437,16 @@
         },
         {
             "name": "dez-php/dez-router",
-            "version": "v1.1.1",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dez-php/dez-router.git",
-                "reference": "8a89541f4dbaf313ccaf5b09d360f6e3a7e21333"
+                "reference": "05d94424e56793aad9d234a94d4467e5bc5e930e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dez-php/dez-router/zipball/8a89541f4dbaf313ccaf5b09d360f6e3a7e21333",
-                "reference": "8a89541f4dbaf313ccaf5b09d360f6e3a7e21333",
+                "url": "https://api.github.com/repos/dez-php/dez-router/zipball/05d94424e56793aad9d234a94d4467e5bc5e930e",
+                "reference": "05d94424e56793aad9d234a94d4467e5bc5e930e",
                 "shasum": ""
             },
             "require": {
@@ -434,20 +477,20 @@
                 "php router",
                 "router"
             ],
-            "time": "2015-10-10 14:10:43"
+            "time": "2015-10-30 12:29:58"
         },
         {
             "name": "dez-php/dez-session",
-            "version": "v1.0.0",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dez-php/dez-session.git",
-                "reference": "08ae3465996db84f6a18cb4f6007293111c346a2"
+                "reference": "e61c1f0619e3eb2a80d9d2b6d20d914219055dd6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dez-php/dez-session/zipball/08ae3465996db84f6a18cb4f6007293111c346a2",
-                "reference": "08ae3465996db84f6a18cb4f6007293111c346a2",
+                "url": "https://api.github.com/repos/dez-php/dez-session/zipball/e61c1f0619e3eb2a80d9d2b6d20d914219055dd6",
+                "reference": "e61c1f0619e3eb2a80d9d2b6d20d914219055dd6",
                 "shasum": ""
             },
             "require": {
@@ -476,7 +519,7 @@
                 "php session",
                 "session"
             ],
-            "time": "2015-10-09 15:54:13"
+            "time": "2015-10-30 20:01:14"
         },
         {
             "name": "dez-php/dez-url",

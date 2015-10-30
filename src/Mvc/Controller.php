@@ -18,13 +18,11 @@
         }
 
         public function __get( $name ) {
-
             if( static::$container->has( $name ) ) {
                 return static::$container->get( $name );
             } else {
                 throw new MvcException( "Service '{$name}' not found on default container" );
             }
-
         }
 
         /**

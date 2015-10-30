@@ -6,6 +6,7 @@
     use Dez\DependencyInjection\Container;
     use Dez\DependencyInjection\Service;
     use Dez\EventDispatcher\Dispatcher;
+    use Dez\Flash\Flash\Session as FlashSession;
     use Dez\Http\Cookies;
     use Dez\Http\Request;
     use Dez\Http\Response;
@@ -31,6 +32,7 @@
                 'session'       => new Service( 'session', new Files() ),
                 'view'          => new Service( 'view', new View() ),
                 'url'           => new Service( 'url', new Url() ),
+                'flash'         => new Service( 'url', new FlashSession() ),
             ];
 
             $this->services['eventDispatcher']  = $this->services['event'];

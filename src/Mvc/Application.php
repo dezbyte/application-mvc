@@ -17,6 +17,7 @@
     use Dez\Session\Adapter;
     use Dez\Url\Url;
     use Dez\View\View;
+    use Dez\Flash\Adapter as Flash;
 
     use Dez\Mvc\Controller\Dispatcher as ControllerDispatcher;
 
@@ -38,6 +39,7 @@
      * @property View view
      * @property Connection db
      * @property Auth auth
+     * @property Flash flash
      */
 
     class Application extends Injectable {
