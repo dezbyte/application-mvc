@@ -98,7 +98,7 @@
          * @return mixed
          */
         public function getAction() {
-            return ucfirst( strtolower( $this->action ) ) . 'Action';
+            return strtolower( $this->action ) . 'Action';
         }
 
         /**

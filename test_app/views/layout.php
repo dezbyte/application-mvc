@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>Document</title>
 </head>
-<body>
-<?= $content ?>
+<body style="background-color: bisque; padding: 10px;">
+<h2><?= __FILE__ ?></h2>
+<?= $this->section( 'content' ); ?>
 </body>
 </html>

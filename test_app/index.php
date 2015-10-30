@@ -3,6 +3,7 @@
     namespace TestApp;
 
     // composer autoload
+    use Dez\Config\Config;
     use Dez\Mvc\Application;
     use Dez\Mvc\FactoryContainer;
     use Dez\View\Engine\Php;
@@ -16,12 +17,19 @@
 
     $app    = new Application();
 
-    $app->view->setViewDirectory( __DIR__ . '/views' )
+    // bootstrap
+    $app->config->merge( Config::fatory( 'config/app.php' ) );
+
+    $app->loader->registerNamespaces(
+        $app->config['application']['autoload']->toArray()
+    )->register();
+
+    $app->url->setBasePath( $app->config['application']['basePath'] );
+
+    $app->view
+        ->setViewDirectory( $app->config['application']['viewDirectory'] )
         ->registerEngine( '.php', new Php( $app->view ) );
 
-    $app->router->add( '/', [
-        'controller'    => 'index',
-        'acrion'        => 'welcome'
-    ] );
+    $response   = $app->run();
 
-    $app->run()->send();
+    $response->send();
