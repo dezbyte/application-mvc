@@ -32,7 +32,7 @@
                 'session'       => new Service( 'session', new Files() ),
                 'view'          => new Service( 'view', new View() ),
                 'url'           => new Service( 'url', new Url() ),
-                'flash'         => new Service( 'url', new FlashSession() ),
+                'flash'         => new Service( 'flash', new FlashSession() ),
             ];
 
             $this->services['eventDispatcher']  = $this->services['event'];
