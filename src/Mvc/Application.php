@@ -71,7 +71,7 @@
                 $dispatcher->setController( $router->getController() );
                 $dispatcher->setAction( $router->getAction() );
                 $dispatcher->setParams( $router->getMatches() );
-                
+
                 try {
                     $dispatcher->dispatch();
 
