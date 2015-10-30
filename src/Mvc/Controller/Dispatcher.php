@@ -82,7 +82,8 @@
          * @return string
          */
         public function getController() {
-            return ucfirst( strtolower( $this->controller ) ) . 'Controller';
+            $controller     = strtolower( $this->controller );
+            return implode( '', array_map( 'ucfirst', explode( '-', $controller ) ) ) . 'Controller';
         }
 
         /**
@@ -98,7 +99,8 @@
          * @return mixed
          */
         public function getAction() {
-            return strtolower( $this->action ) . 'Action';
+            $action     = strtolower( $this->action );
+            return lcfirst( implode( '', array_map( 'ucfirst', explode( '-', $action ) ) ) ) . 'Action';
         }
 
         /**
