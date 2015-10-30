@@ -108,7 +108,7 @@
                     $this->response->setStatusCode( 500 );
 
                     if( $this->getErrorHandler() instanceof \Closure ) {
-                        call_user_func_array( $this->getErrorHandler(), [ $this ] );
+                        call_user_func_array( $this->getErrorHandler(), [ $exception, $this ] );
                         $this->response->setContent( $this->view->render( 'internal_error.php' ) );
                     } else {
                         throw $exception;
