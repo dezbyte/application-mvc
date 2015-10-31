@@ -146,9 +146,13 @@
          */
         protected function render( $path )
         {
-            $this->prepareView();
-            $this->response->sendCookies()->sendHeaders();
-            return $this->view->render( $path );
+            $content    = null;
+            if( $this->response->isEnableBody() ) {
+                $this->prepareView();
+                $this->response->sendCookies()->sendHeaders();
+                $content    = $this->view->render( $path );
+            }
+            return $content;
         }
 
         /**

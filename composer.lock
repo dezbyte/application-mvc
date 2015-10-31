@@ -5,19 +5,20 @@
         "This file is @generated automatically"
     ],
     "hash": "2f061b06cd93f7bf97bf4d909a68971f",
+    "content-hash": "a0c85af1386e067af9e18db3eb5d6615",
     "packages": [
         {
             "name": "dez-php/dez-auth",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dez-php/dez-auth.git",
-                "reference": "0437a7e0f020fe03973e42b0ee5e13948754bd42"
+                "reference": "6cf41941c561204c900927c8661877cafe0042c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dez-php/dez-auth/zipball/0437a7e0f020fe03973e42b0ee5e13948754bd42",
-                "reference": "0437a7e0f020fe03973e42b0ee5e13948754bd42",
+                "url": "https://api.github.com/repos/dez-php/dez-auth/zipball/6cf41941c561204c900927c8661877cafe0042c1",
+                "reference": "6cf41941c561204c900927c8661877cafe0042c1",
                 "shasum": ""
             },
             "require": {
@@ -49,7 +50,7 @@
                 "dez-php auth",
                 "php auth"
             ],
-            "time": "2015-10-30 10:45:40"
+            "time": "2015-10-30 21:51:50"
         },
         {
             "name": "dez-php/dez-collection",
@@ -308,16 +309,16 @@
         },
         {
             "name": "dez-php/dez-http",
-            "version": "v1.1.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dez-php/dez-http.git",
-                "reference": "5f149808cfe4cb287eaee7fc5d74fed79f7d420f"
+                "reference": "e423911edb5702bd0981313fe33cc5226cf134da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dez-php/dez-http/zipball/5f149808cfe4cb287eaee7fc5d74fed79f7d420f",
-                "reference": "5f149808cfe4cb287eaee7fc5d74fed79f7d420f",
+                "url": "https://api.github.com/repos/dez-php/dez-http/zipball/e423911edb5702bd0981313fe33cc5226cf134da",
+                "reference": "e423911edb5702bd0981313fe33cc5226cf134da",
                 "shasum": ""
             },
             "require": {
@@ -346,7 +347,7 @@
                 "http",
                 "php http"
             ],
-            "time": "2015-10-24 14:31:38"
+            "time": "2015-10-31 13:07:48"
         },
         {
             "name": "dez-php/dez-loader",
@@ -570,16 +571,16 @@
         },
         {
             "name": "dez-php/dez-view",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dez-php/dez-view.git",
-                "reference": "6313d841a357a7189c8a83cf2e1d58e04c4960a2"
+                "reference": "9d939c6a289157042c1031d7f678de14d91a4677"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dez-php/dez-view/zipball/6313d841a357a7189c8a83cf2e1d58e04c4960a2",
-                "reference": "6313d841a357a7189c8a83cf2e1d58e04c4960a2",
+                "url": "https://api.github.com/repos/dez-php/dez-view/zipball/9d939c6a289157042c1031d7f678de14d91a4677",
+                "reference": "9d939c6a289157042c1031d7f678de14d91a4677",
                 "shasum": ""
             },
             "require": {
@@ -610,7 +611,7 @@
                 "php view",
                 "view"
             ],
-            "time": "2015-10-29 10:56:49"
+            "time": "2015-10-31 08:50:05"
         }
     ],
     "packages-dev": [],
