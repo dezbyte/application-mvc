@@ -101,7 +101,7 @@
                     $dispatcher->dispatch();
 
                     $this->view->addLayout( "layouts/{$router->getController()}" );
-                    $content    = $this->view->render( "{$router->getController()}/{$router->getAction()}" );
+                    $content    = $this->render( "{$router->getController()}/{$router->getAction()}" );
 
                     $this->response->setContent( $content );
 
@@ -111,7 +111,7 @@
 
                     if( $this->getErrorHandler() instanceof \Closure ) {
                         call_user_func_array( $this->getErrorHandler(), [ $exception, $this ] );
-                        $this->response->setContent( $this->view->render( 'internal_error.php' ) );
+                        $this->response->setContent( $this->render( 'internal_error.php' ) );
                     } else {
                         throw $exception;
                     }
@@ -123,13 +123,19 @@
 
                 if( $this->getPage404Handler() instanceof \Closure ) {
                     call_user_func_array( $this->getPage404Handler(), [ $this ] );
-                    $this->response->setContent( $this->view->render( 'error_404.php' ) );
+                    $this->response->setContent( $this->render( 'error_404.php' ) );
                 } else {
                     throw new MvcException( "Page {$router->getTargetUri()} not found" );
                 }
             }
 
-            return $this->response;
+            return $this->response->sendContent();
+        }
+
+        protected function render( $path )
+        {
+            $this->response->sendCookies()->sendHeaders();
+            return $this->view->render( $path );
         }
 
         /**
