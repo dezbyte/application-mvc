@@ -53,20 +53,6 @@
         public function __construct()
         {
             $this->setDi( FactoryContainer::instance() );
-            $this->initialize();
-        }
-
-        /**
-         * @return $this
-         */
-        public function initialize()
-        {
-            $this->router->add( '/' );
-            $this->router->add( '/:controller' );
-            $this->router->add( '/:controller/:action' );
-            $this->router->add( '/:controller/:action/:id' );
-
-            return $this;
         }
 
         /**
@@ -79,9 +65,7 @@
         {
             $this->event->dispatch( 'beforeApplicationRun', new MvcEvent( $this ) );
 
-            $router     = $this->router;
-
-            $router->handle();
+            $router     = $this->initializeDefaultRoutes()->handle();
 
             if( $router->isFounded() ) {
 
@@ -136,6 +120,19 @@
                 $this->view->set( $service->getName(), $this->{ $service->getName() } );
             }
             return $this;
+        }
+
+        /**
+         * @return Router
+         */
+        protected function initializeDefaultRoutes()
+        {
+            $this->router->add( '/' );
+            $this->router->add( '/:controller' );
+            $this->router->add( '/:controller/:action' );
+            $this->router->add( '/:controller/:action/:id' );
+
+            return $this->router;
         }
 
         /**
