@@ -127,6 +127,9 @@
             return $this->response->sendContent();
         }
 
+        /**
+         * @return $this
+         */
         protected function prepareView() {
             /** @var Service $service */
             foreach( $this->dependencyInjector as $service ) {
@@ -135,6 +138,12 @@
             return $this;
         }
 
+        /**
+         * @param $path
+         * @return $this
+         * @throws \Dez\Http\Exception
+         * @throws \Exception
+         */
         protected function render( $path )
         {
             $this->prepareView();
