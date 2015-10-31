@@ -146,10 +146,10 @@
          */
         protected function render( $path )
         {
+            $this->response->sendCookies()->sendHeaders();
             $content    = null;
             if( $this->response->isEnableBody() ) {
                 $this->prepareView();
-                $this->response->sendCookies()->sendHeaders();
                 $content    = $this->view->render( $path );
             }
             return $content;
