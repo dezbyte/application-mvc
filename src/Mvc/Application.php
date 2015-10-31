@@ -66,11 +66,6 @@
             $this->router->add( '/:controller/:action' );
             $this->router->add( '/:controller/:action/:id' );
 
-            /** @var Service $service */
-            foreach( $this->dependencyInjector as $service ) {
-                $this->view->set( $service->getName(), $this->{ $service->getName() } );
-            }
-
             return $this;
         }
 
@@ -132,8 +127,17 @@
             return $this->response->sendContent();
         }
 
+        protected function prepareView() {
+            /** @var Service $service */
+            foreach( $this->dependencyInjector as $service ) {
+                $this->view->set( $service->getName(), $this->{ $service->getName() } );
+            }
+            return $this;
+        }
+
         protected function render( $path )
         {
+            $this->prepareView();
             $this->response->sendCookies()->sendHeaders();
             return $this->view->render( $path );
         }
