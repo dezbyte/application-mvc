@@ -37,7 +37,9 @@
             ];
 
             $this->services['eventDispatcher']  = $this->services['event'];
-            $this->services['view']->registerEngine('.php', new ViewPhpEngine($this->services['view']));
+
+            $defaultEngine  = new ViewPhpEngine($this->get('view'));
+            $this->get('view')->registerEngine('.php', $defaultEngine);
 
         }
 
