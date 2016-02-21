@@ -81,10 +81,12 @@
                     $content = $dispatcher->dispatch();
 
                     if($this->response->getBodyFormat() == Response::RESPONSE_HTML) {
+
                         if($content === null) {
                             $this->view->addLayout( "layouts/{$router->getController()}" );
                             $content    = $this->render( "{$router->getController()}/{$router->getAction()}" );
                         }
+
                         $this->response->setContent( $content );
                     }
 
@@ -112,7 +114,7 @@
                 }
             }
 
-            return $this->response->sendContent();
+            return $this->response->send();
         }
 
         /**
