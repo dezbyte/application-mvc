@@ -26,10 +26,14 @@
 
     $app->url->setBasePath( $app->config['application']['basePath'] );
 
+    $app->router->add('/:hash/dashboard.html', [
+        'controller'    => 'index',
+        'action'        => 'dashboard',
+        ['post', 'get']
+    ])->regex('hash', '[0-9]{10,20}');
+
     $app->view
         ->setViewDirectory( $app->config['application']['viewDirectory'] )
         ->registerEngine( '.php', new Php( $app->view ) );
 
-    $response   = $app->run();
-
-    $response->send();
+    $app->run();

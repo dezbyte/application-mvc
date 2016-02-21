@@ -14,6 +14,7 @@
     use Dez\Router\Router;
     use Dez\Session\Adapter\Files;
     use Dez\Url\Url;
+    use Dez\View\Engine\Php as ViewPhpEngine;
     use Dez\View\View;
 
     class FactoryContainer extends Container {
@@ -36,6 +37,9 @@
             ];
 
             $this->services['eventDispatcher']  = $this->services['event'];
+
+            $defaultEngine  = new ViewPhpEngine($this->get('view'));
+            $this->get('view')->registerEngine('.php', $defaultEngine);
 
         }
 

@@ -118,7 +118,8 @@
         /**
          * @return $this
          */
-        protected function prepareView() {
+        protected function prepareView()
+        {
             /** @var Service $service */
             foreach( $this->dependencyInjector as $service ) {
                 $this->view->set( $service->getName(), $this->{ $service->getName() } );
@@ -135,7 +136,6 @@
             $this->router->add( '/:controller' );
             $this->router->add( '/:controller/:action' );
             $this->router->add( '/:controller/:action/:id' );
-
             return $this->router;
         }
 
