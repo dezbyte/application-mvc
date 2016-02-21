@@ -36,6 +36,8 @@
 
     interface ControllerInterface extends InjectableInterface {
 
+        public function beforeExecute();
 
+        public function afterExecute();
 
     }

@@ -77,12 +77,16 @@
                 $dispatcher->setParams( $router->getMatches() );
 
                 try {
-                    $dispatcher->dispatch();
 
-                    $this->view->addLayout( "layouts/{$router->getController()}" );
-                    $content    = $this->render( "{$router->getController()}/{$router->getAction()}" );
+                    $content = $dispatcher->dispatch();
 
-                    $this->response->setContent( $content );
+                    if($this->response->getBodyFormat() == Response::RESPONSE_HTML) {
+                        if($content === null) {
+                            $this->view->addLayout( "layouts/{$router->getController()}" );
+                            $content    = $this->render( "{$router->getController()}/{$router->getAction()}" );
+                        }
+                        $this->response->setContent( $content );
+                    }
 
                     $this->event->dispatch( 'afterApplicationRun', new MvcEvent( $this ) );
                 } catch ( \Exception $exception ) {

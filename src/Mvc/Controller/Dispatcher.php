@@ -27,13 +27,14 @@
         }
 
         /**
-         * @return Controller|null
+         * @return mixed
          * @throws MvcException
          * @throws \Exception
          */
         public function dispatch() {
 
             $controller         = null;
+            $controllerOutput   = null;
             $controllerClass    = $this->getNamespace() . $this->getController();
 
             if( class_exists( $controllerClass ) ) {
@@ -46,7 +47,11 @@
 
                     try {
                         $controller->setDi( static::$di );
-                        call_user_func_array( [ $controller, $action ], $this->getParams() );
+
+                        $controller->beforeExecute();
+                        $controllerOutput = call_user_func_array( [ $controller, $action ], $this->getParams() );
+                        $controller->afterExecute();
+
                         static::$di->get( 'event' )->dispatch( 'afterActionRun', new MvcEvent( $controller ) );
                     } catch ( \Exception $exception ) {
                         static::$di->get( 'event' )->dispatch( 'onActionRuntimeError', new MvcEvent( $exception ) );
@@ -59,7 +64,7 @@
                 throw new MvcException( "Controller class '{$controllerClass}' not found" );
             }
 
-            return $controller;
+            return $controllerOutput;
         }
 
         /**

@@ -41,4 +41,21 @@
             return static::$container;
         }
 
+        /**
+         * @return null
+         */
+        public function beforeExecute()
+        {
+
+        }
+
+        /**
+         * @return null
+         */
+        public function afterExecute()
+        {
+
+        }
+
+
     }
