@@ -2,6 +2,7 @@
 
     namespace Dez\Mvc;
 
+    use Dez\Mvc\Controller\Dispatcher;
     use Dez\Mvc\Controller\MvcException;
     use Dez\Mvc\Controller\ControllerInterface;
     use Dez\DependencyInjection\ContainerInterface;
