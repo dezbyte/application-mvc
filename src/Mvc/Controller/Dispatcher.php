@@ -27,39 +27,46 @@
         }
 
         /**
-         * @return Controller|null
+         * @return mixed
          * @throws MvcException
-         * @throws \Exception
          */
         public function dispatch() {
 
             $controller         = null;
-            $controllerClass    = $this->getNamespace() . $this->getController();
+            $controllerOutput   = null;
+            $controllerClass    = $this->getNamespace() . $this->getControllerCamelize();
 
-            if( class_exists( $controllerClass ) ) {
-                /** @var Controller $controller */
-                $controller     = new $controllerClass();
-                $action         = $this->getAction();
-
-                if( method_exists( $controller, $action ) ) {
-                    static::$di->get( 'event' )->dispatch( 'beforeActionRun', new MvcEvent( $controller ) );
-
-                    try {
-                        $controller->setDi( static::$di );
-                        call_user_func_array( [ $controller, $action ], $this->getParams() );
-                        static::$di->get( 'event' )->dispatch( 'afterActionRun', new MvcEvent( $controller ) );
-                    } catch ( \Exception $exception ) {
-                        static::$di->get( 'event' )->dispatch( 'onActionRuntimeError', new MvcEvent( $exception ) );
-                        throw $exception;
-                    }
-                } else {
-                    throw new MvcException( "Method '{$action}' in controller '{$controllerClass}' not found" );
-                }
-            } else {
+            if(! class_exists( $controllerClass ) ) {
                 throw new MvcException( "Controller class '{$controllerClass}' not found" );
             }
 
-            return $controller;
+            /** @var Controller $controller */
+            $controller     = new $controllerClass();
+            $action         = $this->getActionCamelize();
+
+            if(! method_exists( $controller, $action ) ) {
+                throw new MvcException( "Method '{$action}' in controller '{$controllerClass}' not found" );
+            }
+
+            static::$di->get( 'event' )->dispatch( MvcEvent::ON_BEFORE_RUN, new MvcEvent( $controller ) );
+
+            try {
+                $controller->setDi( static::$di );
+                $controller->setNamespace($this->getNamespace());
+                $controller->setName($this->getController());
+                $controller->setAction($this->getAction());
+
+                $controller->beforeExecute();
+                $controllerOutput = call_user_func_array( [ $controller, $action ], $this->getParams() );
+                $controller->afterExecute();
+
+                static::$di->get( 'event' )->dispatch( MvcEvent::ON_AFTER_RUN, new MvcEvent( $controller ) );
+            } catch ( \Exception $exception ) {
+                static::$di->get( 'event' )->dispatch( MvcEvent::ON_ACTION_ERROR, new MvcEvent( $exception ) );
+                throw new MvcException($exception->getMessage());
+            }
+
+            return $controllerOutput;
         }
 
         /**
@@ -82,8 +89,14 @@
          * @return string
          */
         public function getController() {
-            $controller     = strtolower( $this->controller );
-            return implode( '', array_map( 'ucfirst', explode( '-', $controller ) ) ) . 'Controller';
+            return strtolower( $this->controller );
+        }
+
+        /**
+         * @return string
+         */
+        public function getControllerCamelize() {
+            return implode( '', array_map( 'ucfirst', explode( '-', $this->getController() ) ) ) . 'Controller';
         }
 
         /**
@@ -99,8 +112,14 @@
          * @return mixed
          */
         public function getAction() {
-            $action     = strtolower( $this->action );
-            return lcfirst( implode( '', array_map( 'ucfirst', explode( '-', $action ) ) ) ) . 'Action';
+            return strtolower( $this->action );
+        }
+
+        /**
+         * @return mixed
+         */
+        public function getActionCamelize() {
+            return lcfirst( implode( '', array_map( 'ucfirst', explode( '-', $this->getAction() ) ) ) ) . 'Action';
         }
 
         /**

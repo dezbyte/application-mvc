@@ -1,19 +1,42 @@
 <?php
 
-    namespace Dez\Mvc;
+namespace Dez\Mvc;
 
-    use Dez\EventDispatcher\Event;
+use Dez\EventDispatcher\Event;
 
-    class MvcEvent extends Event {
+class MvcEvent extends Event
+{
 
-        protected $target;
+    const ON_BEFORE_RUN = 'beforeActionRun';
 
-        public function __construct( $target ) {
-            $this->target  = $target;
-        }
+    const ON_AFTER_RUN = 'afterActionRun';
 
-        public function getTarget() {
-            return $this->target;
-        }
+    const ON_ACTION_ERROR = 'onActionRuntimeError';
 
+    const ON_BEFORE_APP_RUN = 'beforeApplicationRun';
+
+    const ON_PAGE_404 = 'onPageNotFound';
+
+    /**
+     * @var mixed
+     */
+    protected $target;
+
+    /**
+     * MvcEvent constructor.
+     * @param $target
+     */
+    public function __construct($target)
+    {
+        $this->target = $target;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTarget()
+    {
+        return $this->target;
+    }
+
+}
