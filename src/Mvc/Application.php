@@ -89,7 +89,7 @@ class Application extends Injectable
                     $this->response->setContent($content);
                 }
 
-                $this->event->dispatch('afterApplicationRun', new MvcEvent($this));
+                $this->event->dispatch(MvcEvent::ON_AFTER_APP_RUN, new MvcEvent($this));
             } catch (\Exception $exception) {
                 $this->response->setStatusCode(500);
 

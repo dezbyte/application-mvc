@@ -15,6 +15,8 @@ class MvcEvent extends Event
 
     const ON_BEFORE_APP_RUN = 'beforeApplicationRun';
 
+    const ON_AFTER_APP_RUN = 'afterApplicationRun';
+
     const ON_PAGE_404 = 'onPageNotFound';
 
     /**
