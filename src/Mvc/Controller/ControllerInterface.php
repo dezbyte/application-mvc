@@ -6,7 +6,7 @@
     use Dez\Config\Config;
     use Dez\Db\Connection;
     use Dez\DependencyInjection\InjectableInterface;
-    use Dez\EventDispatcher\Dispatcher;
+    use Dez\EventDispatcher\Dispatcher as EventDispatcher;
     use Dez\Http\Cookies;
     use Dez\Http\Request;
     use Dez\Http\Response;
@@ -20,8 +20,8 @@
     /**
      * @property Loader loader
      * @property Config config
-     * @property Dispatcher eventDispatcher
-     * @property Dispatcher event
+     * @property EventDispatcher eventDispatcher
+     * @property EventDispatcher event
      * @property Request request
      * @property Cookies cookies
      * @property Response response
