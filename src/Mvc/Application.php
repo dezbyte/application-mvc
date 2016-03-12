@@ -82,8 +82,8 @@ class Application extends Injectable
                 if ($this->response->getBodyFormat() == Response::RESPONSE_HTML) {
 
                     if ($content === null) {
-                        $this->view->addLayout("layouts/{$router->getController()}");
-                        $content = $this->render("{$router->getController()}/{$router->getAction()}");
+                        $this->view->addLayout("layouts/{$dispatcher->getController()}");
+                        $content = $this->render("{$dispatcher->getController()}/{$dispatcher->getAction()}");
                     }
 
                     $this->response->setContent($content);
@@ -158,6 +158,7 @@ class Application extends Injectable
     {
         $this->response->sendCookies()->sendHeaders();
         $content = null;
+
         if ($this->response->isEnableBody()) {
             $this->prepareView();
             $content = $this->view->render($path);

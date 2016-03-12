@@ -73,28 +73,34 @@ abstract class Controller implements ControllerInterface
 
     /**
      * @param array $parameters
+     * @param bool $render
      * @return mixed
      * @throws MvcException
      */
-    public function forward(array $parameters = [])
+    public function execute(array $parameters = [], $render = false)
     {
+        if(! isset($parameters['action'])) {
+            throw new MvcException("Action required for forwarding");
+        }
+
         $dispatcher = new Dispatcher($this->getDi());
 
         $dispatcher->setNamespace(isset($parameters['namespace']) ? $parameters['namespace'] : $this->getNamespace());
         $dispatcher->setController(isset($parameters['controller']) ? $parameters['controller'] : $this->getName());
 
-        if(! isset($parameters['action'])) {
-            throw new MvcException("Action required for forwarding");
+        if(isset($parameters['params'], $parameters['params'][0])) {
+            $dispatcher->setParams($parameters['params']);
         }
 
         $dispatcher->setAction($parameters['action']);
 
-        return $dispatcher->dispatch();
-    }
+        $content = $dispatcher->dispatch();
 
-    public function execute()
-    {
+        if($render === true) {
+            $content = $this->view->fetch("{$dispatcher->getController()}/{$dispatcher->getAction()}");
+        }
 
+        return $content;
     }
 
     /**
