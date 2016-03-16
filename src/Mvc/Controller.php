@@ -2,6 +2,7 @@
 
 namespace Dez\Mvc;
 
+use Dez\Http\Response;
 use Dez\Mvc\Controller\Dispatcher;
 use Dez\Mvc\Controller\MvcException;
 use Dez\Mvc\Controller\ControllerInterface;
@@ -101,6 +102,23 @@ abstract class Controller implements ControllerInterface
         }
 
         return $content;
+    }
+
+    /**
+     * @param string $relative
+     * @return Response
+     */
+    public function redirect($relative)
+    {
+        return $this->response->redirect($this->url->path($relative))->setStatusCode(302);
+    }
+
+    /**
+     * @return Response
+     */
+    public function refresh()
+    {
+        return $this->response->redirect($this->router->getTargetUri())->setStatusCode(302);
     }
 
     /**
