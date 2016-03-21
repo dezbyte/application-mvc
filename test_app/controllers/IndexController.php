@@ -18,8 +18,15 @@
             $mapper->setAllowedOrder(['id', 'views']);
             $mapper->processRequestParams();
 
-            $mapper->addFilter('email', Mapper::MAPPER_EQUAL, 'test@mail.com');
-            $mapper->addFilter('status', Mapper::MAPPER_ENUM, 'admins');
+            $mapper->addFilter('status', Mapper::MAPPER_ENUM, 'publisher');
+            $mapper->addFilter('email', Mapper::MAPPER_LIKE, 'test');
+
+            $mapper->addFilter('id', Mapper::MAPPER_GREATER_THAN_EQUAL, 3);
+            $mapper->addFilter('id', Mapper::MAPPER_LESS_THAN, 45);
+
+            $mapper->setOrder('views', Mapper::MAPPER_ORDER_DESC);
+
+            $mapper->setPrefixUrl('users/list');
 
             die(var_dump($mapper->getUrl()));
 

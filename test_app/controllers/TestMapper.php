@@ -6,6 +6,6 @@ use Dez\Mvc\RouterGridMapper\Mapper;
 
 class TestMapper extends Mapper {
 
-    protected $uniqueIdentity = 'articles';
+//    protected $uniqueIdentity = 'articles';
 
 }

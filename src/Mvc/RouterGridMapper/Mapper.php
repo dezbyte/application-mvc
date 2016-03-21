@@ -9,7 +9,7 @@ use Dez\Url\Url;
 
 abstract class Mapper extends Injectable{
     
-    const MAPPER_IDENTITY = 'router-grid-mapper';
+    const MAPPER_IDENTITY = 'grid-mapper';
 
     const MAPPER_ORDER_DESC = 'desc';
     const MAPPER_ORDER_ASC = 'asc';
@@ -78,7 +78,7 @@ abstract class Mapper extends Injectable{
 
                 if(null !== $conditions) {
 
-                    $conditions = array_chunk(explode('-', $conditions), 2, 'test');
+                    $conditions = array_chunk(explode('-', $conditions), 2);
                     $conditions = array_combine(array_column($conditions, 0), array_column($conditions, 1));
 
                     foreach ($conditions as $criterion => $value) {
@@ -138,7 +138,9 @@ abstract class Mapper extends Injectable{
      */
     public function addFilter($column, $criterion = Mapper::MAPPER_EQUAL, $value)
     {
-        $this->filter[$column][$criterion] = $value;
+        if($this->checkFilterCriterion($criterion)) {
+            $this->filter[$column][$criterion] = $value;
+        }
 
         return $this;
     }
