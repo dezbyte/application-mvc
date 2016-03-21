@@ -32,6 +32,8 @@
         ['post', 'get']
     ])->regex('hash', '[0-9]{10,20}');
 
+    $app->router->add('/:controller/:action/:params');
+
     $app->view
         ->setViewDirectory( $app->config['application']['viewDirectory'] )
         ->registerEngine( '.php', new Php( $app->view ) );

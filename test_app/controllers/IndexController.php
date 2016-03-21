@@ -4,12 +4,25 @@
 
     use Dez\Http\Response;
     use Dez\Mvc\Controller;
+    use Dez\Mvc\RouterGridMapper\Mapper;
 
     class IndexController extends Controller
     {
 
         public function indexAction( $id )
         {
+
+            $mapper = new TestMapper();
+            $mapper->setDi($this->getDi());
+            $mapper->setAllowedFilter(['id', 'email', 'name']);
+            $mapper->setAllowedOrder(['id', 'views']);
+            $mapper->processRequestParams();
+
+            $mapper->addFilter('email', Mapper::MAPPER_EQUAL, 'test@mail.com');
+            $mapper->addFilter('status', Mapper::MAPPER_ENUM, 'admins');
+
+            die(var_dump($mapper->getUrl()));
+
             $this->view->set('content', $this->execute([
                 'action' => 'test1',
             ], true));
