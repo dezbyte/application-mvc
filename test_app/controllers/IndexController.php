@@ -4,13 +4,15 @@
 
     use Dez\Http\Response;
     use Dez\Mvc\Controller;
-    use Dez\Mvc\RouterGridMapper\Mapper;
+    use Dez\Mvc\GridRouteMapper\Mapper;
 
     class IndexController extends Controller
     {
 
         public function indexAction( $id )
         {
+            
+//            $this->grid(Users::query());
 
             $mapper = new TestMapper();
             $mapper->setDi($this->getDi());
@@ -19,7 +21,7 @@
             $mapper->processRequestParams();
 
             $mapper->addFilter('status', Mapper::MAPPER_ENUM, 'publisher');
-            $mapper->addFilter('email', Mapper::MAPPER_LIKE, 'test');
+            $mapper->addFilter('email', Mapper::MAPPER_LIKE, 'gmail');
 
             $mapper->addFilter('id', Mapper::MAPPER_GREATER_THAN_EQUAL, 3);
             $mapper->addFilter('id', Mapper::MAPPER_LESS_THAN, 45);

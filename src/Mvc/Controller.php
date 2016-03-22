@@ -7,6 +7,8 @@ use Dez\Mvc\Controller\Dispatcher;
 use Dez\Mvc\Controller\MvcException;
 use Dez\Mvc\Controller\ControllerInterface;
 use Dez\DependencyInjection\ContainerInterface;
+use Dez\Mvc\GridRouteMapper\Adapter\OrmQuery;
+use Dez\ORM\Model\Table;
 
 abstract class Controller implements ControllerInterface
 {
@@ -119,6 +121,19 @@ abstract class Controller implements ControllerInterface
     public function refresh()
     {
         return $this->response->redirect($this->router->getTargetUri())->setStatusCode(302);
+    }
+
+    public function grid(Table $table)
+    {
+        $source = new OrmQuery($table);
+
+        $name = $this->getName();
+        $action = $this->getAction();
+        $currentUrlPath = $this->url->create("$name:$action");
+
+//        $mapper = new GridRouteMapper\
+
+        return $table;
     }
 
     /**

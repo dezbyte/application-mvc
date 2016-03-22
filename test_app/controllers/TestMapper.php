@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Dez\Mvc\RouterGridMapper\Mapper;
+use Dez\Mvc\GridRouteMapper\Mapper;
 
 class TestMapper extends Mapper {
 
