@@ -9,6 +9,7 @@ use Dez\Mvc\Controller\ControllerInterface;
 use Dez\DependencyInjection\ContainerInterface;
 use Dez\Mvc\GridRouteMapper\Adapter\OrmQuery;
 use Dez\Mvc\GridRouteMapper\AnonymousMapper;
+use Dez\Mvc\GridRouteMapper\Mapper;
 use Dez\ORM\Model\QueryBuilder;
 use Dez\Url\Builder;
 
@@ -131,21 +132,19 @@ abstract class Controller implements ControllerInterface
     }
 
     /**
+     * @param Mapper $mapper
      * @param QueryBuilder $queryBuilder
      * @return AnonymousMapper
+     * @throws GridRouteMapper\MapperException
      */
-    public function grid(QueryBuilder $queryBuilder)
+    public function grid(Mapper $mapper, QueryBuilder $queryBuilder)
     {
         $source = new OrmQuery($queryBuilder);
-        $mapper = new AnonymousMapper();
-        $builder = new Builder("{$this->getName()}:{$this->getAction()}", $this->getParams(), $this->router);
-        
+
         $mapper->setDataSource($source);
         $mapper->setDi($this->getDi());
 
-        $currentUrlPath = $builder->search() ? $builder->getLink() : '/';
-
-        $mapper->setPrefixUrl($currentUrlPath);
+        $mapper->processRequestParams();
 
         return $mapper;
     }

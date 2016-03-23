@@ -15,6 +15,7 @@ class OrmQuery extends Adapter {
 
     /**
      * @param QueryBuilder $query
+     * @return $this
      * @throws MapperException
      */
     protected function setSourceData($query = null)
@@ -24,6 +25,8 @@ class OrmQuery extends Adapter {
         }
         
         $this->query = $query;
+
+        return $this;
     }
 
     /**
@@ -38,10 +41,8 @@ class OrmQuery extends Adapter {
 
         if(count($filter) > 0) {
             foreach($filter as $column => $conditions) {
-                foreach($conditions as $criterion => $values) {
-                    foreach($values as $value) {
-                        $this->query->where($column, $value, static::$criteria[$criterion]);
-                    }
+                foreach($conditions as $criterion => $value) {
+                    $this->query->where($column, $value, static::$criteria[$criterion]);
                 }
             }
         }

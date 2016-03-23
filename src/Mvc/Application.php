@@ -125,6 +125,7 @@ class Application extends Injectable
         $this->router->add('/:controller');
         $this->router->add('/:controller/:action');
         $this->router->add('/:controller/:action/:id');
+        $this->router->add('/:controller/:action/:params');
 
         return $this->router;
     }

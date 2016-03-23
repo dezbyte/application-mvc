@@ -27,6 +27,9 @@ abstract class Mapper extends Injectable
     const MAPPER_LESS_THAN = 'lt';
     const MAPPER_LESS_THAN_EQUAL = 'le';
 
+    /**
+     * @var null
+     */
     protected $dataSource = null;
 
     /**
@@ -60,11 +63,6 @@ abstract class Mapper extends Injectable
     protected $order = [];
 
     /**
-     * @var string
-     */
-    protected $prefixUrl = '/';
-
-    /**
      * @var bool
      */
     protected $hasRequestRoute = false;
@@ -94,6 +92,10 @@ abstract class Mapper extends Injectable
     public function setUniqueIdentity($uniqueIdentity)
     {
         $this->uniqueIdentity = $uniqueIdentity;
+
+        if ($this->uniqueIdentity !== null) {
+            $this->setPrefix("{$this->getUniqueIdentity()}-");
+        }
 
         return $this;
     }
@@ -132,7 +134,7 @@ abstract class Mapper extends Injectable
 
                     foreach ($conditions as $criterion => $value) {
                         if ($this->checkFilterCriterion($criterion)) {
-                            $this->addFilter($filterColumn, $criterion, $value);
+                            $this->setFilter($filterColumn, $criterion, $value);
                         }
                     }
                 }
@@ -150,6 +152,10 @@ abstract class Mapper extends Injectable
         return $this;
     }
 
+    /**
+     * @return mixed
+     * @throws MapperException
+     */
     public function processDataSource()
     {
         if(! ($this->dataSource instanceof Adapter)) {
@@ -162,6 +168,8 @@ abstract class Mapper extends Injectable
         ];
 
         $this->getDataSource()->process($dataSourceParams);
+
+        return $this->getDataSource()->getData();
     }
 
     /**
@@ -232,13 +240,13 @@ abstract class Mapper extends Injectable
     /**
      * @param $column
      * @param string $criterion
-     * @param $value
-     * @return $this
+     * @param null $value
+     * @return Mapper
      */
-    public function addFilter($column, $criterion = Mapper::MAPPER_EQUAL, $value)
+    public function setFilter($column, $criterion = Mapper::MAPPER_EQUAL, $value = null)
     {
         if ($this->checkFilterCriterion($criterion)) {
-            $this->filter[$column][$criterion][] = $value;
+            $this->filter[$column][$criterion] = $value;
         }
 
         return $this;
@@ -248,15 +256,11 @@ abstract class Mapper extends Injectable
      * @param $column
      * @param string $criterion
      * @param null $value
-     * @return static
+     * @return Mapper
      */
-    public function setFilter($column, $criterion = Mapper::MAPPER_EQUAL, $value = null)
+    public function filter($column, $criterion = Mapper::MAPPER_EQUAL, $value = null)
     {
-        if ($this->checkFilterCriterion($criterion)) {
-            $this->filter[$column][$criterion] = [$value];
-        }
-
-        return $this;
+        return $this->setFilter($column, $criterion, $value);
     }
 
     /**
@@ -293,34 +297,44 @@ abstract class Mapper extends Injectable
     }
 
     /**
+     * @param string $path
      * @return string
      */
-    public function getUrl()
+    public function url($path = '/')
     {
-        $parts = [];
 
-        foreach ($this->getFilter() as $column => $filter) {
-            $parts[] = "{$this->getPrefix()}filter-{$column}";
-            $filterConditions = [];
-            foreach ($filter as $criterion => $value) {
-                $value = implode('-', $value);
-                $filterConditions[] = "{$criterion}-{$value}";
+        if($this->hasRequestRoute()) {
+            $filterParts = [];
+
+            foreach ($this->getFilter() as $column => $filter) {
+
+                $filterParts[] = "{$this->getPrefix()}filter-{$column}";
+                $filterConditions = [];
+
+                foreach ($filter as $criterion => $value) {
+                    $value = implode('-', $value);
+                    $filterConditions[] = "{$criterion}-{$value}";
+                }
+
+                $filterParts[] = implode('-', $filterConditions);
+
             }
-            $parts[] = implode('-', $filterConditions);
-        }
 
-        foreach ($this->getOrder() as $column => $vector) {
-            $parts[] = "{$this->getPrefix()}order-{$column}/{$vector}";
-        }
+            foreach ($this->getOrder() as $column => $vector) {
+                $filterParts[] = "{$this->getPrefix()}order-{$column}/{$vector}";
+            }
 
-        $requestSuffix = implode('/', $parts);
+            $filterRoute = implode('/', $filterParts);
+
+            $identity = Mapper::MAPPER_IDENTITY;
+
+            $path = "{$path}/{$identity}/{$filterRoute}";
+        }
 
         /** @var Url $url */
         $url = $this->getDi()->get('url');
 
-        $identity = Mapper::MAPPER_IDENTITY;
-
-        return $url->path("{$this->getPrefixUrl()}/{$identity}/{$requestSuffix}");
+        return $url->path($path);
     }
 
     /**
@@ -352,22 +366,13 @@ abstract class Mapper extends Injectable
     }
 
     /**
-     * @return mixed
+     * @param $column
+     * @param string $vector
+     * @return Mapper
      */
-    public function getPrefixUrl()
+    public function order($column, $vector = Mapper::MAPPER_ORDER_ASC)
     {
-        return $this->prefixUrl;
-    }
-
-    /**
-     * @param mixed $prefixUrl
-     * @return static
-     */
-    public function setPrefixUrl($prefixUrl)
-    {
-        $this->prefixUrl = $prefixUrl;
-
-        return $this;
+        return $this->setOrder($column, $vector);
     }
 
     /**
@@ -405,6 +410,12 @@ abstract class Mapper extends Injectable
         return $this;
     }
 
-
+    /**
+     * @return mixed
+     */
+    public function data()
+    {
+        return $this->getDataSource()->getData();
+    }
 
 }
