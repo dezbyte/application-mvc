@@ -114,9 +114,7 @@ abstract class Mapper extends Injectable
         $index = array_search(Mapper::MAPPER_IDENTITY, $dirtyMatches);
 
         if ($index !== false) {
-
-            $this->setHasRequestRoute(true);
-
+            
             $matches = array_slice($dirtyMatches, $index + 1);
             $matches = array_column(array_chunk($matches, 2), 1, 0);
 
