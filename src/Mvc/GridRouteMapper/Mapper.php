@@ -255,19 +255,18 @@ abstract class Mapper extends Injectable
     public function filter($column, $criterion = Mapper::MAPPER_EQUAL, $value = null, $reset = true)
     {
         if(true === $reset) {
-            $this->resetFilter($column);
+            $this->resetFilter();
         }
 
         return $this->setFilter($column, $criterion, $value);
     }
 
     /**
-     * @param $column
      * @return $this
      */
-    public function resetFilter($column)
+    public function resetFilter()
     {
-        $this->filter[$column] = [];
+        $this->filter = [];
 
         return $this;
     }
