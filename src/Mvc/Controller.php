@@ -8,6 +8,8 @@ use Dez\Mvc\Controller\MvcException;
 use Dez\Mvc\Controller\ControllerInterface;
 use Dez\DependencyInjection\ContainerInterface;
 use Dez\Mvc\GridRouteMapper\Adapter\OrmQuery;
+use Dez\Mvc\GridRouteMapper\AnonymousMapper;
+use Dez\ORM\Model\QueryBuilder;
 use Dez\ORM\Model\Table;
 
 abstract class Controller implements ControllerInterface
@@ -123,17 +125,23 @@ abstract class Controller implements ControllerInterface
         return $this->response->redirect($this->router->getTargetUri())->setStatusCode(302);
     }
 
-    public function grid(Table $table)
+    public function grid(QueryBuilder $queryBuilder)
     {
-        $source = new OrmQuery($table);
+        $source = new OrmQuery($queryBuilder);
+
+        $mapper = new AnonymousMapper();
+        $mapper->setDataSource($source);
+        $mapper->setAllowedFilter(['id', 'name', 'status']);
 
         $name = $this->getName();
         $action = $this->getAction();
         $currentUrlPath = $this->url->create("$name:$action");
 
-//        $mapper = new GridRouteMapper\
+        $mapper->setPrefixUrl($currentUrlPath);
 
-        return $table;
+        $mapper->getUrl();
+
+        return $mapper;
     }
 
     /**

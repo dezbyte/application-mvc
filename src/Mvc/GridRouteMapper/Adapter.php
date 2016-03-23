@@ -2,7 +2,7 @@
 
 namespace Dez\Mvc\GridRouteMapper;
 
-abstract class SourceAdapter
+abstract class Adapter
 {
 
     public function __construct($source = null)
@@ -13,16 +13,18 @@ abstract class SourceAdapter
     static public $criteria = [
         Mapper::MAPPER_EQUAL => '=',
         Mapper::MAPPER_LIKE => 'LIKE',
+        Mapper::MAPPER_NOT_LIKE => 'NOT LIKE',
         Mapper::MAPPER_GREATER_THAN => '>',
         Mapper::MAPPER_GREATER_THAN_EQUAL => '>=',
         Mapper::MAPPER_LESS_THAN => '<',
         Mapper::MAPPER_LESS_THAN_EQUAL => '<=',
         Mapper::MAPPER_NOT_EQUAL => '!=',
-        Mapper::MAPPER_ENUM => 'IN(%s)'
     ];
 
     abstract protected function setSourceData($data = null);
 
-    abstract protected function process();
+    abstract public function process(array $params = []);
+
+    abstract public function getData();
 
 }

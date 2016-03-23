@@ -4,6 +4,7 @@
 
     use Dez\Http\Response;
     use Dez\Mvc\Controller;
+    use Dez\Mvc\GridRouteMapper\AnonymousMapper;
     use Dez\Mvc\GridRouteMapper\Mapper;
 
     class IndexController extends Controller
@@ -14,17 +15,25 @@
             
 //            $this->grid(Users::query());
 
-            $mapper = new TestMapper();
+            $mapper = new AnonymousMapper();
             $mapper->setDi($this->getDi());
+
             $mapper->setAllowedFilter(['id', 'email', 'name']);
             $mapper->setAllowedOrder(['id', 'views']);
+
             $mapper->processRequestParams();
 
-            $mapper->addFilter('status', Mapper::MAPPER_ENUM, 'publisher');
+            $mapper->addFilter('status', Mapper::MAPPER_NOT_LIKE, 'publisher');
             $mapper->addFilter('email', Mapper::MAPPER_LIKE, 'gmail');
 
-            $mapper->addFilter('id', Mapper::MAPPER_GREATER_THAN_EQUAL, 3);
-            $mapper->addFilter('id', Mapper::MAPPER_LESS_THAN, 45);
+            $mapper->addFilter('id', Mapper::MAPPER_EQUAL, 3);
+            $mapper->addFilter('id', Mapper::MAPPER_EQUAL, 45);
+            $mapper->addFilter('id', Mapper::MAPPER_EQUAL, 3);
+            $mapper->addFilter('id', Mapper::MAPPER_EQUAL, 45);
+
+//            $mapper->addFilter('name', Mapper::MAPPER_NULL);
+
+            $mapper->setFilter('id', Mapper::MAPPER_EQUAL, 13);
 
             $mapper->setOrder('views', Mapper::MAPPER_ORDER_DESC);
 
