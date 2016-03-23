@@ -65,6 +65,11 @@ abstract class Mapper extends Injectable
     protected $prefixUrl = '/';
 
     /**
+     * @var bool
+     */
+    protected $hasRequestRoute = false;
+
+    /**
      * Mapper constructor.
      */
     public function __construct()
@@ -113,6 +118,8 @@ abstract class Mapper extends Injectable
 
         if ($index !== false) {
 
+            $this->setHasRequestRoute(true);
+
             $matches = array_slice($dirtyMatches, $index + 1);
             $matches = array_column(array_chunk($matches, 2), 1, 0);
 
@@ -120,7 +127,6 @@ abstract class Mapper extends Injectable
                 $conditions = $request->getFromArray($matches, "{$this->getPrefix()}filter-{$filterColumn}", null);
 
                 if (null !== $conditions) {
-
                     $conditions = array_chunk(explode('-', $conditions), 2);
                     $conditions = array_column($conditions, 1, 0);
 
@@ -129,7 +135,6 @@ abstract class Mapper extends Injectable
                             $this->addFilter($filterColumn, $criterion, $value);
                         }
                     }
-
                 }
             }
 
@@ -142,7 +147,7 @@ abstract class Mapper extends Injectable
             }
         }
 
-//        $request->getFromArray($router->getRawMatches(), 'filter-');
+        return $this;
     }
 
     public function processDataSource()
@@ -380,6 +385,26 @@ abstract class Mapper extends Injectable
     {
         $this->dataSource = $dataSource;
     }
+
+    /**
+     * @return boolean
+     */
+    public function hasRequestRoute()
+    {
+        return $this->hasRequestRoute;
+    }
+
+    /**
+     * @param boolean $hasRequestRoute
+     * @return static
+     */
+    public function setHasRequestRoute($hasRequestRoute)
+    {
+        $this->hasRequestRoute = $hasRequestRoute;
+
+        return $this;
+    }
+
 
 
 }

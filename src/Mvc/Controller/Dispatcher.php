@@ -51,9 +51,11 @@ class Dispatcher
 
         try {
             $controller->setDi(static::$di);
+            
             $controller->setNamespace($this->getNamespace());
             $controller->setName($this->getController());
             $controller->setAction($this->getAction());
+            $controller->setParams($this->getParams());
 
             $controller->beforeExecute();
             $controllerOutput = call_user_func_array([$controller, $action], $this->getParams());

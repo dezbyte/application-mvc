@@ -10,7 +10,7 @@ use Dez\DependencyInjection\ContainerInterface;
 use Dez\Mvc\GridRouteMapper\Adapter\OrmQuery;
 use Dez\Mvc\GridRouteMapper\AnonymousMapper;
 use Dez\ORM\Model\QueryBuilder;
-use Dez\ORM\Model\Table;
+use Dez\Url\Builder;
 
 abstract class Controller implements ControllerInterface
 {
@@ -34,6 +34,11 @@ abstract class Controller implements ControllerInterface
      * @var string
      */
     protected $action;
+
+    /**
+     * @var array
+     */
+    protected $params = [];
 
 
     /**
@@ -125,21 +130,22 @@ abstract class Controller implements ControllerInterface
         return $this->response->redirect($this->router->getTargetUri())->setStatusCode(302);
     }
 
+    /**
+     * @param QueryBuilder $queryBuilder
+     * @return AnonymousMapper
+     */
     public function grid(QueryBuilder $queryBuilder)
     {
         $source = new OrmQuery($queryBuilder);
-
         $mapper = new AnonymousMapper();
+        $builder = new Builder("{$this->getName()}:{$this->getAction()}", $this->getParams(), $this->router);
+        
         $mapper->setDataSource($source);
-        $mapper->setAllowedFilter(['id', 'name', 'status']);
+        $mapper->setDi($this->getDi());
 
-        $name = $this->getName();
-        $action = $this->getAction();
-        $currentUrlPath = $this->url->create("$name:$action");
+        $currentUrlPath = $builder->search() ? $builder->getLink() : '/';
 
         $mapper->setPrefixUrl($currentUrlPath);
-
-        $mapper->getUrl();
 
         return $mapper;
     }
@@ -213,6 +219,25 @@ abstract class Controller implements ControllerInterface
     public function setAction($action)
     {
         $this->action = $action;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    /**
+     * @param array $params
+     * @return static
+     */
+    public function setParams($params)
+    {
+        $this->params = $params;
 
         return $this;
     }

@@ -31,10 +31,6 @@
             $mapper->addFilter('id', Mapper::MAPPER_EQUAL, 3);
             $mapper->addFilter('id', Mapper::MAPPER_EQUAL, 45);
 
-//            $mapper->addFilter('name', Mapper::MAPPER_NULL);
-
-            $mapper->setFilter('id', Mapper::MAPPER_EQUAL, 13);
-
             $mapper->setOrder('views', Mapper::MAPPER_ORDER_DESC);
 
             $mapper->setPrefixUrl('users/list');
