@@ -114,7 +114,7 @@ abstract class Mapper extends Injectable
         $index = array_search(Mapper::MAPPER_IDENTITY, $dirtyMatches);
 
         if ($index !== false) {
-            
+
             $matches = array_slice($dirtyMatches, $index + 1);
             $matches = array_column(array_chunk($matches, 2), 1, 0);
 
@@ -307,7 +307,6 @@ abstract class Mapper extends Injectable
                 $filterConditions = [];
 
                 foreach ($filter as $criterion => $value) {
-                    $value = implode('-', $value);
                     $filterConditions[] = "{$criterion}-{$value}";
                 }
 
