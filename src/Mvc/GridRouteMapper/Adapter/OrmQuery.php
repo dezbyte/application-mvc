@@ -44,7 +44,7 @@ class OrmQuery extends Adapter {
             foreach($filter as $column => $conditions) {
                 foreach($conditions as $criterion => $value) {
                     if(Mapper::MAPPER_LIKE === $criterion || Mapper::MAPPER_NOT_LIKE === $criterion) {
-                        $value = addslashes($value);
+                        $value = addslashes(preg_replace('/[^а-яa-z0-9_\.]+/ui', '', $value));
                         $criterion = static::$criteria[$criterion];
                         $this->query->whereRaw("`{$column}` {$criterion} '%{$value}%'");
                     } else {
