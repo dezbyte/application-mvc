@@ -43,7 +43,7 @@ class OrmQuery extends Adapter {
         if(count($filter) > 0) {
             foreach($filter as $column => $conditions) {
                 foreach($conditions as $criterion => $value) {
-                    if(Mapper::MAPPER_LIKE === $criterion || Mapper::MAPPER_NOT_LIKE) {
+                    if(Mapper::MAPPER_LIKE === $criterion || Mapper::MAPPER_NOT_LIKE === $criterion) {
                         $value = addslashes($value);
                         $criterion = static::$criteria[$criterion];
                         $this->query->whereRaw("`{$column}` {$criterion} '%{$value}%'");
