@@ -63,11 +63,6 @@ abstract class Mapper extends Injectable
     protected $order = [];
 
     /**
-     * @var bool
-     */
-    protected $hasRequestRoute = false;
-
-    /**
      * Mapper constructor.
      */
     public function __construct()
@@ -256,23 +251,25 @@ abstract class Mapper extends Injectable
      * @param $column
      * @param string $criterion
      * @param null $value
+     * @param bool $reset
      * @return Mapper
      */
-    public function filter($column, $criterion = Mapper::MAPPER_EQUAL, $value = null)
+    public function filter($column, $criterion = Mapper::MAPPER_EQUAL, $value = null, $reset = false)
     {
+        if(true === $reset) {
+            $this->resetFilter($column);
+        }
+
         return $this->setFilter($column, $criterion, $value);
     }
 
     /**
      * @param $column
-     * @param string $criterion
      * @return $this
      */
-    public function resetFilter($column, $criterion = Mapper::MAPPER_EQUAL)
+    public function resetFilter($column)
     {
-        if ($this->checkFilterCriterion($criterion)) {
-            $this->filter[$column][$criterion] = [];
-        }
+        $this->filter[$column] = [];
 
         return $this;
     }
@@ -396,18 +393,7 @@ abstract class Mapper extends Injectable
      */
     public function hasRequestRoute()
     {
-        return $this->hasRequestRoute;
-    }
-
-    /**
-     * @param boolean $hasRequestRoute
-     * @return static
-     */
-    public function setHasRequestRoute($hasRequestRoute)
-    {
-        $this->hasRequestRoute = $hasRequestRoute;
-
-        return $this;
+        return (count($this->getFilter()) > 0 || count($this->getOrder()) > 0);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Dez\Mvc\GridRouteMapper\Adapter;
 
+use Dez\Mvc\GridRouteMapper\Mapper;
 use Dez\Mvc\GridRouteMapper\MapperException;
 use Dez\Mvc\GridRouteMapper\Adapter;
 use Dez\ORM\Model\QueryBuilder;
@@ -42,7 +43,13 @@ class OrmQuery extends Adapter {
         if(count($filter) > 0) {
             foreach($filter as $column => $conditions) {
                 foreach($conditions as $criterion => $value) {
-                    $this->query->where($column, $value, static::$criteria[$criterion]);
+                    if(Mapper::MAPPER_LIKE === $criterion || Mapper::MAPPER_NOT_LIKE) {
+                        $value = addslashes($value);
+                        $criterion = static::$criteria[$criterion];
+                        $this->query->whereRaw("`{$column}` {$criterion} '%{$value}%'");
+                    } else {
+                        $this->query->where($column, $value, static::$criteria[$criterion]);
+                    }
                 }
             }
         }
