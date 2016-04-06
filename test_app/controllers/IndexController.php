@@ -18,28 +18,28 @@
             $mapper = new AnonymousMapper();
             $mapper->setDi($this->getDi());
 
-            $mapper->setAllowedFilter(['id', 'email', 'name']);
+            $mapper->setAllowedFilter(['id', 'email', 'name', 'salary', 'diagonal', 'model']);
             $mapper->setAllowedOrder(['id', 'views']);
 
             $mapper->processRequestParams();
 
-            $mapper->addFilter('status', Mapper::MAPPER_NOT_LIKE, 'publisher');
-            $mapper->addFilter('email', Mapper::MAPPER_LIKE, 'gmail');
-
-            $mapper->addFilter('id', Mapper::MAPPER_EQUAL, 3);
-            $mapper->addFilter('id', Mapper::MAPPER_EQUAL, 45);
-            $mapper->addFilter('id', Mapper::MAPPER_EQUAL, 3);
-            $mapper->addFilter('id', Mapper::MAPPER_EQUAL, 45);
-
             $mapper->setOrder('views', Mapper::MAPPER_ORDER_DESC);
 
-            $mapper->setPrefixUrl('users/list');
+            $mapper->setRootUrlPath('users/list');
 
-            die(var_dump($mapper->getUrl()));
+//            die(var_dump(
+//                (string) $mapper->filter('email', Mapper::MAPPER_NOT_LIKE, 'gmail'),
+//                (string) $mapper->filter('salary', Mapper::MAPPER_GREATER_THAN_EQUAL, 1000, false),
+//                (string) $mapper->order('views', Mapper::MAPPER_ORDER_ASC),
+//                (string) $mapper->filter('salary', Mapper::MAPPER_LESS_THAN_EQUAL, 5500, true)
+//            ));
 
-            $this->view->set('content', $this->execute([
-                'action' => 'test1',
-            ], true));
+            $this->view->setMainLayout('blank');
+            $this->view->set('mapper', $mapper->path('index/index'));
+
+//            $this->view->set('content', $this->execute([
+//                'action' => 'test1',
+//            ], true));
         }
 
         public function test1Action()
