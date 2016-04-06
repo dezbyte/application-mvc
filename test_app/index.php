@@ -18,7 +18,7 @@
     $app    = new Application();
 
     // bootstrap
-    $app->config->merge( Config::fatory( 'config/app.php' ) );
+    $app->config->merge( Config::factory( 'config/app.php' ) );
 
     $app->loader->registerNamespaces(
         $app->config['application']['autoload']->toArray()

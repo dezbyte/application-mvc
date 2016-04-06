@@ -146,6 +146,9 @@ abstract class Controller implements ControllerInterface
 
         $mapper->processRequestParams();
 
+        $builder = new Builder("{$this->getName()}:{$this->getAction()}", $this->getParams(), $this->router);
+        $mapper->path($builder->make());
+
         return $mapper;
     }
 

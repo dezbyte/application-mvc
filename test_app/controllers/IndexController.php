@@ -23,17 +23,6 @@
 
             $mapper->processRequestParams();
 
-            $mapper->setOrder('views', Mapper::MAPPER_ORDER_DESC);
-
-            $mapper->setRootUrlPath('users/list');
-
-//            die(var_dump(
-//                (string) $mapper->filter('email', Mapper::MAPPER_NOT_LIKE, 'gmail'),
-//                (string) $mapper->filter('salary', Mapper::MAPPER_GREATER_THAN_EQUAL, 1000, false),
-//                (string) $mapper->order('views', Mapper::MAPPER_ORDER_ASC),
-//                (string) $mapper->filter('salary', Mapper::MAPPER_LESS_THAN_EQUAL, 5500, true)
-//            ));
-
             $this->view->setMainLayout('blank');
             $this->view->set('mapper', $mapper->path('index/index'));
 
@@ -47,9 +36,7 @@
             $this->view->set('content', __METHOD__);
             $this->view->set('sub_content', $this->execute([
                 'action' => 'test2',
-                'params' => [
-                    __METHOD__
-                ]
+                'params' => [__METHOD__]
             ]));
         }
 

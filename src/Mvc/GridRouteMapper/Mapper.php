@@ -431,11 +431,8 @@ abstract class Mapper extends Injectable
     {
         $filter = &$this->toBuild['filter'];
 
-        if (false === $reset) {
-            $filter = $filter + $this->getFilter();
-        } else {
-            $filter = $this->getFilter();
-            $filter[$column] = [];
+        if (true === $reset) {
+            $filter = [];
         }
 
         $filter[$column][$criterion] = $value;
