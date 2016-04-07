@@ -15,20 +15,33 @@ use Dez\Mvc\GridRouteMapper\Mapper;
         <span>
             diagonal
         </span>
-        <li><a href="<?= $mapper->filter('diagonal', Mapper::MAPPER_EQUAL, 21); ?>">21"</a></li>
-        <li><a href="<?= $mapper->filter('diagonal', Mapper::MAPPER_EQUAL, 23); ?>">23"</a></li>
-        <li><a href="<?= $mapper->filter('diagonal', Mapper::MAPPER_EQUAL, 23.5); ?>">23.5"</a></li>
-        <li><a href="<?= $mapper->filter('diagonal', Mapper::MAPPER_EQUAL, 27); ?>">27"</a></li>
-        <li><a href="<?= $mapper->filter('diagonal', Mapper::MAPPER_GREATER_THAN_EQUAL, 19)->filter('diagonal', Mapper::MAPPER_LESS_THAN_EQUAL, 27, false); ?>">all 19" - 27"</a></li>
+        <li><a href="<?= $mapper->filter('size', Mapper::MAPPER_EQUAL, 21); ?>">21"</a></li>
+        <li><a href="<?= $mapper->filter('size', Mapper::MAPPER_EQUAL, 23); ?>">23"</a></li>
+        <li><a href="<?= $mapper->filter('size', Mapper::MAPPER_EQUAL, 23.5); ?>">23.5"</a></li>
+        <li><a href="<?= $mapper->filter('size', Mapper::MAPPER_EQUAL, 27); ?>">27"</a></li>
+        <li><a href="<?= $mapper->filter('size', Mapper::MAPPER_GREATER_THAN_EQUAL, 19)->filter('diagonal', Mapper::MAPPER_LESS_THAN_EQUAL, 27, false); ?>">all 19" - 27"</a></li>
     </ul>
 
     <ul>
         <span>
-            model
+            vendor
         </span>
-        <li><a href="<?= $mapper->filter('model', Mapper::MAPPER_EQUAL, 'dell', false); ?>">dell</a></li>
-        <li><a href="<?= $mapper->filter('model', Mapper::MAPPER_EQUAL, 'acer', false); ?>">acer</a></li>
-        <li><a href="<?= $mapper->filter('model', Mapper::MAPPER_EQUAL, 'samsung', false); ?>">samsung</a></li>
-        <li><a href="<?= $mapper->filter('model', Mapper::MAPPER_EQUAL, 'asus', false); ?>">asus</a></li>
+        <li><a href="<?= $mapper->filter('vendor', Mapper::MAPPER_EQUAL, 'dell'); ?>">dell</a></li>
+        <li><a href="<?= $mapper->filter('vendor', Mapper::MAPPER_LIKE, 'acer'); ?>">acer</a></li>
+        <li><a href="<?= $mapper->filter('vendor', Mapper::MAPPER_EQUAL, 'samsung'); ?>">samsung</a></li>
+        <li><a href="<?= $mapper->filter('vendor', Mapper::MAPPER_EQUAL, 'asus'); ?>">asus</a></li>
+    </ul>
+
+    <ul>
+        <span>
+            price
+        </span>
+        <li>
+            currency <a href="<?= $mapper->filter('currency', Mapper::MAPPER_EQUAL, '€'); ?>">&euro;</a>&nbsp;<a href="<?= $mapper->filter('currency', Mapper::MAPPER_EQUAL, '$'); ?>">$</a>
+        </li>
+        <li><a href="<?= $mapper->filter('price', Mapper::MAPPER_GREATER_THAN_EQUAL, 100); ?>">>= 100</a></li>
+        <li><a href="<?= $mapper->filter('price', Mapper::MAPPER_GREATER_THAN_EQUAL, 500); ?>">>= 500</a></li>
+        <li><a href="<?= $mapper->filter('price', Mapper::MAPPER_GREATER_THAN_EQUAL, 1000); ?>">>= 1000</a></li>
+        <li><a href="<?= $mapper->filter('price', Mapper::MAPPER_GREATER_THAN_EQUAL, 10000); ?>">>= 10000</a></li>
     </ul>
 </div>

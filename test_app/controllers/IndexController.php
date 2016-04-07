@@ -18,7 +18,7 @@
             $mapper = new AnonymousMapper();
             $mapper->setDi($this->getDi());
 
-            $mapper->setAllowedFilter(['id', 'email', 'name', 'salary', 'diagonal', 'model']);
+            $mapper->setAllowedFilter(['id', 'email', 'name', 'salary', 'size', 'vendor', 'price', 'currency']);
             $mapper->setAllowedOrder(['id', 'views']);
 
             $mapper->processRequestParams();
