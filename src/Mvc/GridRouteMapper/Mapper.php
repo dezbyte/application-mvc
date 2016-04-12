@@ -12,21 +12,6 @@ abstract class Mapper extends Injectable
 
     const MAPPER_IDENTITY = 'grid-mapper';
 
-    const MAPPER_ORDER_DESC = 'desc';
-    const MAPPER_ORDER_ASC = 'asc';
-
-    const MAPPER_LIKE = 'lk';
-    const MAPPER_NOT_LIKE = 'nl';
-
-    const MAPPER_NULL = 'null';
-
-    const MAPPER_EQUAL = 'eq';
-    const MAPPER_NOT_EQUAL = 'ne';
-    const MAPPER_GREATER_THAN = 'gt';
-    const MAPPER_GREATER_THAN_EQUAL = 'ge';
-    const MAPPER_LESS_THAN = 'lt';
-    const MAPPER_LESS_THAN_EQUAL = 'le';
-
     /**
      * @var null
      */
@@ -86,6 +71,25 @@ abstract class Mapper extends Injectable
     }
 
     /**
+     * @return array
+     */
+    public function & getToBuild()
+    {
+        return $this->toBuild;
+    }
+
+    /**
+     * @param array $toBuild
+     * @return $this
+     */
+    public function toBuild(array $toBuild = [])
+    {
+        $this->toBuild = $toBuild;
+
+        return $this;
+    }
+
+    /**
      * @return null
      */
     public function getUniqueIdentity()
@@ -132,7 +136,9 @@ abstract class Mapper extends Injectable
             $matches = array_column(array_chunk($matches, 2), 1, 0);
 
             foreach ($this->getAllowedFilter() as $filterColumn) {
-                $conditions = $request->getFromArray($matches, "{$this->getPrefix()}filter-{$filterColumn}", null);
+
+                $key = $this->getPrefix() . 'filter-' . $filterColumn;
+                $conditions = $request->getFromArray($matches, $key, null);
 
                 if (null !== $conditions) {
                     $conditions = array_chunk(explode('-', $conditions), 2);
@@ -147,7 +153,9 @@ abstract class Mapper extends Injectable
             }
 
             foreach ($this->getAllowedOrder() as $orderColumn) {
-                $founded = $request->getFromArray($matches, "{$this->getPrefix()}order-{$orderColumn}", null);
+
+                $key = $this->getPrefix() . 'order-' . $orderColumn;
+                $founded = $request->getFromArray($matches, $key, null);
 
                 if (null !== $founded) {
                     $this->setOrder($orderColumn, $founded);
@@ -211,15 +219,15 @@ abstract class Mapper extends Injectable
     public function getFilterCriteria()
     {
         return [
-            Mapper::MAPPER_EQUAL,
-            Mapper::MAPPER_NOT_EQUAL,
-            Mapper::MAPPER_GREATER_THAN,
-            Mapper::MAPPER_GREATER_THAN_EQUAL,
-            Mapper::MAPPER_LESS_THAN,
-            Mapper::MAPPER_LESS_THAN_EQUAL,
-            Mapper::MAPPER_LIKE,
-            Mapper::MAPPER_NOT_LIKE,
-            Mapper::MAPPER_NULL,
+            Filter::FILTER_EQUAL,
+            Filter::FILTER_NOT_EQUAL,
+            Filter::FILTER_GREATER_THAN,
+            Filter::FILTER_GREATER_THAN_EQUAL,
+            Filter::FILTER_LESS_THAN,
+            Filter::FILTER_LESS_THAN_EQUAL,
+            Filter::FILTER_LIKE,
+            Filter::FILTER_NOT_LIKE,
+            Filter::FILTER_NULL,
         ];
     }
 
@@ -276,7 +284,7 @@ abstract class Mapper extends Injectable
      * @param null $value
      * @return Mapper
      */
-    public function setFilter($column, $criterion = Mapper::MAPPER_EQUAL, $value = null)
+    public function setFilter($column, $criterion = Filter::FILTER_EQUAL, $value = null)
     {
         if ($this->checkFilterCriterion($criterion)) {
             $this->filter[$column][$criterion] = $value;
@@ -401,44 +409,32 @@ abstract class Mapper extends Injectable
     }
 
     /**
-     * @param $column
-     * @param string $vector
-     * @param bool $reset
-     * @return Mapper
+     * @return Order
      */
-    public function order($column, $vector = Mapper::MAPPER_ORDER_ASC, $reset = true)
+    public function order()
     {
-        $order = &$this->toBuild['order'];
-        $order = [];
+        return new Order($this);
+    }
 
-        if (false === $reset) {
-            $order = $this->getOrder();
-        }
-
-        $order[$column] = $vector;
-
-        return $this;
+    /**
+     * @return Filter
+     */
+    public function filter()
+    {
+        return new Filter($this);
     }
 
     /**
      * @param $column
+     * @param $value
      * @param string $criterion
-     * @param null $value
-     * @param bool $reset
-     * @return Mapper
+     * @return bool
      */
-    public function filter($column, $criterion = Mapper::MAPPER_EQUAL, $value = null, $reset = false)
+    public function has($column, $value, $criterion = Filter::FILTER_EQUAL)
     {
-        $filter = &$this->toBuild['filter'];
         $filter = $this->getFilter();
 
-        if (true === $reset) {
-            $filter = [];
-        }
-
-        $filter[$column][$criterion] = $value;
-
-        return $this;
+        return isset($filter[$column], $filter[$column][$criterion]) && $filter[$column][$criterion] == $value;
     }
 
     /**

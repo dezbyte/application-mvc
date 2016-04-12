@@ -1,47 +1,49 @@
 <?php
+
 /**
  * @var string $content
  * @var \Dez\Mvc\GridRouteMapper\AnonymousMapper $mapper
  * */
-use Dez\Mvc\GridRouteMapper\Mapper;
+
+use Dez\Mvc\GridRouteMapper\Filter;
+
+$filter = $mapper->filter();
 
 ?>
+<style>
+    .active, .active * {
+        font-weight: bold;
+        color: black;
+    }
+</style>
 <div style="border: 3px dotted coral;">
     <code><?=__FILE__?></code>
-<!--    <pre style="border: 3px double black;">--><?php //print_r($content); ?><!--</pre>-->
     <a href="<?= $url->create( 'index:index' ) ?>">hello</a>
     <hr>
+    <a href="<?= $filter->reset(); ?>">reset filters</a>
     <ul>
         <span>
             diagonal
         </span>
-        <li><a href="<?= $mapper->filter('size', Mapper::MAPPER_EQUAL, 21); ?>">21"</a></li>
-        <li><a href="<?= $mapper->filter('size', Mapper::MAPPER_EQUAL, 23); ?>">23"</a></li>
-        <li><a href="<?= $mapper->filter('size', Mapper::MAPPER_EQUAL, 23.5); ?>">23.5"</a></li>
-        <li><a href="<?= $mapper->filter('size', Mapper::MAPPER_EQUAL, 27); ?>">27"</a></li>
-        <li><a href="<?= $mapper->filter('size', Mapper::MAPPER_GREATER_THAN_EQUAL, 19)->filter('diagonal', Mapper::MAPPER_LESS_THAN_EQUAL, 27, false); ?>">all 19" - 27"</a></li>
+        <li><a href="<?= $filter->leave('resolution', 'hd', 'lk')->attach('size', 17.5, 'le'); ?>">smalls</a></li>
+        <li><a href="<?= $filter->leave('resolution', 4, 'ge')->attach('size', 27, 'gt'); ?>">super big 5k</a></li>
+
+        <li><a class="<?= ($mapper->has('size', 21) ? 'active' : null); ?>" href="<?= $filter->leave('size', 21); ?>">21"</a></li>
+        <li><a class="<?= ($mapper->has('size', 23) ? 'active' : null); ?>" href="<?= $filter->leave('size', 23); ?>">23"</a></li>
+        <li><a class="<?= ($mapper->has('size', 23.5) ? 'active' : null); ?>" href="<?= $filter->leave('size', 23.5); ?>">23.5"</a></li>
+        <li><a class="<?= ($mapper->has('size', 27) ? 'active' : null); ?>" href="<?= $filter->leave('size', 27); ?>">27"</a></li>
+        <li><a class="<?= ($mapper->has('size', 19, 'gt') ? 'active' : null); ?>" href="<?= $filter->leave('size', 19, 'gt')->attach('size', 27, 'lt'); ?>">all 19" - 27"</a></li>
     </ul>
 
     <ul>
         <span>
             vendor
         </span>
-        <li><a href="<?= $mapper->filter('vendor', Mapper::MAPPER_EQUAL, 'dell'); ?>">dell</a></li>
-        <li><a href="<?= $mapper->filter('vendor', Mapper::MAPPER_LIKE, 'acer'); ?>">acer</a></li>
-        <li><a href="<?= $mapper->filter('vendor', Mapper::MAPPER_EQUAL, 'samsung'); ?>">samsung</a></li>
-        <li><a href="<?= $mapper->filter('vendor', Mapper::MAPPER_EQUAL, 'asus'); ?>">asus</a></li>
+        <li><a class="<?= ($mapper->has('vendor', 'lg') ? 'active' : null); ?>" href="<?= $filter->leave('vendor', 'lg'); ?>">lg</a></li>
+        <li><a class="<?= ($mapper->has('vendor', 'dell') ? 'active' : null); ?>" href="<?= $filter->leave('vendor', 'dell'); ?>">dell</a></li>
+        <li><a class="<?= ($mapper->has('vendor', 'acer') ? 'active' : null); ?>" href="<?= $filter->leave('vendor', 'acer'); ?>">acer</a></li>
+        <li><a class="<?= ($mapper->has('vendor', 'samsung') ? 'active' : null); ?>" href="<?= $filter->leave('vendor', 'samsung'); ?>">samsung</a></li>
+        <li><a class="<?= ($mapper->has('vendor', 'asus') ? 'active' : null); ?>" href="<?= $filter->leave('vendor', 'asus'); ?>">asus</a></li>
     </ul>
 
-    <ul>
-        <span>
-            price
-        </span>
-        <li>
-            currency <a href="<?= $mapper->filter('currency', Mapper::MAPPER_EQUAL, '€'); ?>">&euro;</a>&nbsp;<a href="<?= $mapper->filter('currency', Mapper::MAPPER_EQUAL, '$'); ?>">$</a>
-        </li>
-        <li><a href="<?= $mapper->filter('price', Mapper::MAPPER_GREATER_THAN_EQUAL, 100); ?>">>= 100</a></li>
-        <li><a href="<?= $mapper->filter('price', Mapper::MAPPER_GREATER_THAN_EQUAL, 500); ?>">>= 500</a></li>
-        <li><a href="<?= $mapper->filter('price', Mapper::MAPPER_GREATER_THAN_EQUAL, 1000); ?>">>= 1000</a></li>
-        <li><a href="<?= $mapper->filter('price', Mapper::MAPPER_GREATER_THAN_EQUAL, 10000); ?>">>= 10000</a></li>
-    </ul>
 </div>
