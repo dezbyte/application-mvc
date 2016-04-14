@@ -18,32 +18,17 @@
             $mapper = new AnonymousMapper();
             $mapper->setDi($this->getDi());
 
-            $mapper->setAllowedFilter(['id', 'email', 'name']);
+            $mapper->setAllowedFilter(['id', 'email', 'name', 'salary', 'size', 'vendor', 'price', 'currency']);
             $mapper->setAllowedOrder(['id', 'views']);
 
             $mapper->processRequestParams();
 
-            $mapper->addFilter('status', Mapper::MAPPER_NOT_LIKE, 'publisher');
-            $mapper->addFilter('email', Mapper::MAPPER_LIKE, 'gmail');
+            $this->view->setMainLayout('blank');
+            $this->view->set('mapper', $mapper->path('index/index'));
 
-            $mapper->addFilter('id', Mapper::MAPPER_EQUAL, 3);
-            $mapper->addFilter('id', Mapper::MAPPER_EQUAL, 45);
-            $mapper->addFilter('id', Mapper::MAPPER_EQUAL, 3);
-            $mapper->addFilter('id', Mapper::MAPPER_EQUAL, 45);
-
-//            $mapper->addFilter('name', Mapper::MAPPER_NULL);
-
-            $mapper->setFilter('id', Mapper::MAPPER_EQUAL, 13);
-
-            $mapper->setOrder('views', Mapper::MAPPER_ORDER_DESC);
-
-            $mapper->setPrefixUrl('users/list');
-
-            die(var_dump($mapper->getUrl()));
-
-            $this->view->set('content', $this->execute([
-                'action' => 'test1',
-            ], true));
+//            $this->view->set('content', $this->execute([
+//                'action' => 'test1',
+//            ], true));
         }
 
         public function test1Action()
@@ -51,9 +36,7 @@
             $this->view->set('content', __METHOD__);
             $this->view->set('sub_content', $this->execute([
                 'action' => 'test2',
-                'params' => [
-                    __METHOD__
-                ]
+                'params' => [__METHOD__]
             ]));
         }
 

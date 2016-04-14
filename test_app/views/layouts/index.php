@@ -1,4 +1,4 @@
-<div style="background-color: #d9d9d9; padding: 10px;">
+<div style="border: 2px dashed olivedrab">
     <code><?= __FILE__ ?></code>
     <?= $this->section( 'content' ); ?>
 </div>

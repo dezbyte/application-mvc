@@ -9,8 +9,9 @@ use Dez\Mvc\Controller\ControllerInterface;
 use Dez\DependencyInjection\ContainerInterface;
 use Dez\Mvc\GridRouteMapper\Adapter\OrmQuery;
 use Dez\Mvc\GridRouteMapper\AnonymousMapper;
+use Dez\Mvc\GridRouteMapper\Mapper;
 use Dez\ORM\Model\QueryBuilder;
-use Dez\ORM\Model\Table;
+use Dez\Url\Builder;
 
 abstract class Controller implements ControllerInterface
 {
@@ -34,6 +35,11 @@ abstract class Controller implements ControllerInterface
      * @var string
      */
     protected $action;
+
+    /**
+     * @var array
+     */
+    protected $params = [];
 
 
     /**
@@ -125,21 +131,23 @@ abstract class Controller implements ControllerInterface
         return $this->response->redirect($this->router->getTargetUri())->setStatusCode(302);
     }
 
-    public function grid(QueryBuilder $queryBuilder)
+    /**
+     * @param Mapper $mapper
+     * @param QueryBuilder $queryBuilder
+     * @return AnonymousMapper
+     * @throws GridRouteMapper\MapperException
+     */
+    public function grid(Mapper $mapper, QueryBuilder $queryBuilder)
     {
         $source = new OrmQuery($queryBuilder);
 
-        $mapper = new AnonymousMapper();
         $mapper->setDataSource($source);
-        $mapper->setAllowedFilter(['id', 'name', 'status']);
+        $mapper->setDi($this->getDi());
 
-        $name = $this->getName();
-        $action = $this->getAction();
-        $currentUrlPath = $this->url->create("$name:$action");
+        $mapper->processRequestParams();
 
-        $mapper->setPrefixUrl($currentUrlPath);
-
-        $mapper->getUrl();
+        $builder = new Builder("{$this->getName()}:{$this->getAction()}", $this->getParams(), $this->router);
+        $mapper->path($builder->make());
 
         return $mapper;
     }
@@ -213,6 +221,25 @@ abstract class Controller implements ControllerInterface
     public function setAction($action)
     {
         $this->action = $action;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    /**
+     * @param array $params
+     * @return static
+     */
+    public function setParams($params)
+    {
+        $this->params = $params;
 
         return $this;
     }

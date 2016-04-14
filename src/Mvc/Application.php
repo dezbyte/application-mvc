@@ -49,6 +49,9 @@ class Application extends Injectable
 
     protected $controllerNamespace = '\\App\\Controller\\';
 
+    /**
+     * Application constructor.
+     */
     public function __construct()
     {
         $this->setDi(FactoryContainer::instance());
@@ -125,6 +128,7 @@ class Application extends Injectable
         $this->router->add('/:controller');
         $this->router->add('/:controller/:action');
         $this->router->add('/:controller/:action/:id');
+        $this->router->add('/:controller/:action/:params');
 
         return $this->router;
     }
@@ -216,6 +220,20 @@ class Application extends Injectable
         $this->page404Handler = \Closure::bind($page404Handler, $this);
 
         return $this;
+    }
+
+    /**
+     * @return \Dez\Config\Adapter\Ini|\Dez\Config\Adapter\Json|\Dez\Config\Adapter\NativeArray|Config
+     * @throws \Dez\Config\Exception
+     */
+    public static function sampleConfiguration()
+    {
+        $configurationFilePath = realpath(__DIR__ . '/../sample.configuration.ini');
+
+        $config = Config::factory($configurationFilePath);
+        $config['config-file'] = $configurationFilePath;
+
+        return $config;
     }
 
 }

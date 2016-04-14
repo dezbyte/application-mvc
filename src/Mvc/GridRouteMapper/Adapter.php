@@ -5,11 +5,18 @@ namespace Dez\Mvc\GridRouteMapper;
 abstract class Adapter
 {
 
+    /**
+     * Adapter constructor.
+     * @param null $source
+     */
     public function __construct($source = null)
     {
         $this->setSourceData($source);
     }
 
+    /**
+     * @var array
+     */
     static public $criteria = [
         Mapper::MAPPER_EQUAL => '=',
         Mapper::MAPPER_LIKE => 'LIKE',
@@ -21,10 +28,21 @@ abstract class Adapter
         Mapper::MAPPER_NOT_EQUAL => '!=',
     ];
 
+    /**
+     * @param null $data
+     * @return $this
+     */
     abstract protected function setSourceData($data = null);
 
+    /**
+     * @param array $params
+     * @return $this
+     */
     abstract public function process(array $params = []);
 
+    /**
+     * @return mixed
+     */
     abstract public function getData();
 
 }
