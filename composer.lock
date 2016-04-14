@@ -97,16 +97,16 @@
         },
         {
             "name": "dez-php/dez-configuration",
-            "version": "v1.2.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dez-php/dez-configuration.git",
-                "reference": "5fc36bc4d5b27cb810355d989a7de89e839e40ba"
+                "reference": "9b8cd6b62f6b53193aeb89ef9ddb104b953ab0c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dez-php/dez-configuration/zipball/5fc36bc4d5b27cb810355d989a7de89e839e40ba",
-                "reference": "5fc36bc4d5b27cb810355d989a7de89e839e40ba",
+                "url": "https://api.github.com/repos/dez-php/dez-configuration/zipball/9b8cd6b62f6b53193aeb89ef9ddb104b953ab0c5",
+                "reference": "9b8cd6b62f6b53193aeb89ef9ddb104b953ab0c5",
                 "shasum": ""
             },
             "require": {
@@ -135,7 +135,7 @@
                 "dez-php config",
                 "php config"
             ],
-            "time": "2016-03-15 16:06:10"
+            "time": "2016-04-14 17:18:34"
         },
         {
             "name": "dez-php/dez-db",
