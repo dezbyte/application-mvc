@@ -20,7 +20,7 @@ class OrmQuery extends Adapter {
     protected function setSourceData($query = null)
     {
         if(! ($query instanceof QueryBuilder)) {
-            throw new MapperException("Source must be instance of Orm Table");
+            throw new MapperException("Source must be instance of ORM Table");
         }
         
         $this->query = $query;
