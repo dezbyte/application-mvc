@@ -2,7 +2,8 @@
 
     namespace Dez\Mvc\Controller;
 
-    use Dez\Auth\Auth;
+    use Dez\Authorizer\Adapter\Session;
+    use Dez\Authorizer\Adapter\Token;
     use Dez\Config\Config;
     use Dez\Db\Connection;
     use Dez\DependencyInjection\InjectableInterface;
@@ -29,7 +30,7 @@
      * @property Router router
      * @property View view
      * @property Connection db
-     * @property Auth auth
+     * @property Token|Session auth
      * @property Url url
      * @property Flash flash
      */
