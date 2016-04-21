@@ -2,7 +2,8 @@
 
 namespace Dez\Mvc;
 
-use Dez\Auth\Auth;
+use Dez\Authorizer\Adapter\Session;
+use Dez\Authorizer\Adapter\Token;
 use Dez\Config\Config;
 use Dez\Db\Connection;
 use Dez\DependencyInjection\Injectable;
@@ -37,7 +38,7 @@ use Dez\View\View;
  * @property Url url
  * @property View view
  * @property Connection db
- * @property Auth auth
+ * @property Token|Session auth
  * @property Flash flash
  */
 class Application extends Injectable
