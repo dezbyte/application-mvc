@@ -9,6 +9,8 @@ use Dez\View\Engine\Php;
 
 abstract class Configurable extends Application {
 
+    protected $ormConnectionName = 'development';
+
     /**
      * SiteDezzApplication constructor.
      * @param Config $config
@@ -71,8 +73,27 @@ abstract class Configurable extends Application {
         }
 
         if ($this->config->has('db')) {
-            Connection::init($this->config, 'development');
+            Connection::init($this->config, $this->getOrmConnectionName());
         }
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrmConnectionName()
+    {
+        return $this->ormConnectionName;
+    }
+
+    /**
+     * @param string $ormConnectionName
+     * @return static
+     */
+    public function setOrmConnectionName($ormConnectionName)
+    {
+        $this->ormConnectionName = $ormConnectionName;
 
         return $this;
     }
