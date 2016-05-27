@@ -95,8 +95,10 @@ class Application extends Injectable
 
                 $this->event->dispatch(MvcEvent::ON_AFTER_APP_RUN, new MvcEvent($this));
             } catch (\Exception $exception) {
-                $this->response->setStatusCode(500);
 
+                $this->event->dispatch(MvcEvent::ON_DISPATCHER_ERROR, new MvcEvent($this));
+
+                $this->response->setStatusCode(500);
                 if ($this->getErrorHandler() instanceof \Closure) {
                     call_user_func_array($this->getErrorHandler(), [$exception, $this]);
                     $this->response->setContent($this->render('internal_error.php'));
