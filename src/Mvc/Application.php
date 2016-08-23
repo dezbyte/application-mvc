@@ -45,10 +45,6 @@ use Dez\View\View;
 class Application extends Injectable
 {
 
-    protected $page404Handler;
-
-    protected $errorHandler;
-
     protected $controllerNamespace = '\\App\\Controller\\';
 
     /**
@@ -81,43 +77,31 @@ class Application extends Injectable
             $dispatcher->setParams($router->getMatches());
 
             try {
-
                 $content = $dispatcher->dispatch();
 
                 if ($this->response->getBodyFormat() == Response::RESPONSE_HTML) {
-
                     if ($content === null) {
                         $this->view->addLayout("layouts/{$dispatcher->getController()}");
                         $content = $this->render("{$dispatcher->getController()}/{$dispatcher->getAction()}");
                     }
-
                     $this->response->setContent($content);
                 }
 
                 $this->event->dispatch(MvcEvent::ON_AFTER_APP_RUN, new MvcEvent($this));
+            } catch (Page404Exception $exception) {
+                $this->response->setStatusCode(404);
+                throw $exception;
             } catch (\Exception $exception) {
-
                 $this->event->dispatch(MvcEvent::ON_DISPATCHER_ERROR, new MvcEvent($this));
-
                 $this->response->setStatusCode(500);
-                if ($this->getErrorHandler() instanceof \Closure) {
-                    call_user_func_array($this->getErrorHandler(), [$exception, $this]);
-                    $this->response->setContent($this->render('internal_error'));
-                } else {
-                    throw $exception;
-                }
+                throw $exception;
             }
 
         } else {
             $this->event->dispatch(MvcEvent::ON_PAGE_404, new MvcEvent($this));
             $this->response->setStatusCode(404);
 
-            if ($this->getPage404Handler() instanceof \Closure) {
-                call_user_func_array($this->getPage404Handler(), [$this]);
-                $this->response->setContent($this->render('error_404'));
-            } else {
-                throw new Page404Exception("Page with route '{$router->getTargetUri()}' was not found");
-            }
+            throw new Page404Exception("Page with route '{$router->getTargetUri()}' was not found");
         }
 
         return $this->response->send();
@@ -130,6 +114,7 @@ class Application extends Injectable
     {
         $this->router->add('/');
         $this->router->add('/:controller');
+        $this->router->add('/:controller/:id');
         $this->router->add('/:controller/:action');
         $this->router->add('/:controller/:action/:id');
         $this->router->add('/:controller/:action/:params');
@@ -184,44 +169,6 @@ class Application extends Injectable
         foreach ($this->dependencyInjector as $service) {
             $this->view->set($service->getName(), $this->{$service->getName()});
         }
-
-        return $this;
-    }
-
-    /**
-     * @return \Closure
-     */
-    public function getErrorHandler()
-    {
-        return $this->errorHandler;
-    }
-
-    /**
-     * @param mixed $errorHandler
-     * @return $this
-     */
-    public function setErrorHandler(\Closure $errorHandler)
-    {
-        $this->errorHandler = \Closure::bind($errorHandler, $this);
-
-        return $this;
-    }
-
-    /**
-     * @return \Closure
-     */
-    public function getPage404Handler()
-    {
-        return $this->page404Handler;
-    }
-
-    /**
-     * @param \Closure $page404Handler
-     * @return $this
-     */
-    public function setPage404Handler(\Closure $page404Handler)
-    {
-        $this->page404Handler = \Closure::bind($page404Handler, $this);
 
         return $this;
     }
