@@ -16,6 +16,7 @@ use Dez\Http\Response;
 use Dez\Loader\Loader;
 use Dez\Mvc\Controller\Dispatcher as ControllerDispatcher;
 use Dez\Mvc\Controller\MvcException;
+use Dez\Mvc\Controller\Page404Exception;
 use Dez\Router\Router;
 use Dez\Session\Adapter;
 use Dez\Url\Url;
@@ -101,7 +102,7 @@ class Application extends Injectable
                 $this->response->setStatusCode(500);
                 if ($this->getErrorHandler() instanceof \Closure) {
                     call_user_func_array($this->getErrorHandler(), [$exception, $this]);
-                    $this->response->setContent($this->render('internal_error.php'));
+                    $this->response->setContent($this->render('internal_error'));
                 } else {
                     throw $exception;
                 }
@@ -113,9 +114,9 @@ class Application extends Injectable
 
             if ($this->getPage404Handler() instanceof \Closure) {
                 call_user_func_array($this->getPage404Handler(), [$this]);
-                $this->response->setContent($this->render('error_404.php'));
+                $this->response->setContent($this->render('error_404'));
             } else {
-                throw new MvcException("Page {$router->getTargetUri()} not found");
+                throw new Page404Exception("Page with route '{$router->getTargetUri()}' was not found");
             }
         }
 
@@ -157,7 +158,7 @@ class Application extends Injectable
 
     /**
      * @param $path
-     * @return $this
+     * @return string
      * @throws \Dez\Http\Exception
      * @throws \Exception
      */
@@ -197,7 +198,7 @@ class Application extends Injectable
 
     /**
      * @param mixed $errorHandler
-     * @return \Closure
+     * @return $this
      */
     public function setErrorHandler(\Closure $errorHandler)
     {
