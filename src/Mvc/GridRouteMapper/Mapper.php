@@ -123,7 +123,7 @@ abstract class Mapper extends Injectable
         $router = $this->getDi()->get('router');
 
         if (null === $request || null === $router) {
-            throw new MapperException("Request or Router is required for mapper");
+            throw new MapperException("Request or Router is required for Grid Mapper");
         }
 
         $dirtyMatches = $router->getDirtyMatches();

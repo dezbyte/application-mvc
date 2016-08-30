@@ -36,7 +36,8 @@ class Dispatcher
         $controllerClass = $this->getNamespace() . $this->getControllerCamelize();
 
         if (!class_exists($controllerClass)) {
-            throw new MvcException("Controller class '{$controllerClass}' not found");
+            static::$di->get('event')->dispatch(MvcEvent::ON_PAGE_404, new MvcEvent($this));
+            throw new Page404Exception("Controller class '{$controllerClass}' not found");
         }
 
         /** @var Controller $controller */
@@ -44,7 +45,8 @@ class Dispatcher
         $action = $this->getActionCamelize();
 
         if (!method_exists($controller, $action)) {
-            throw new MvcException("Method '{$action}' in controller '{$controllerClass}' not found");
+            static::$di->get('event')->dispatch(MvcEvent::ON_PAGE_404, new MvcEvent($this));
+            throw new Page404Exception("Method '{$action}' in controller '{$controllerClass}' not found");
         }
 
         static::$di->get('event')->dispatch(MvcEvent::ON_BEFORE_RUN, new MvcEvent($controller));

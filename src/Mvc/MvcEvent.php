@@ -19,6 +19,8 @@ class MvcEvent extends Event
 
     const ON_PAGE_404 = 'onPageNotFound';
 
+    const ON_DISPATCHER_ERROR = 'onDispatcherError';
+
     /**
      * @var mixed
      */

@@ -35,13 +35,21 @@ class Filter implements \JsonSerializable {
         $this->mountFromTemporaryFilter();
     }
 
+    /**
+     * @return Filter
+     */
     public function mountFromTemporaryFilter()
     {
-        $this->filters = & $this->getMapper()->getToBuild()['filter'];
-        
+        $mapperParams = &$this->getMapper()->getToBuild();
+
+        $this->filters = &$mapperParams['filter'];
+
         return $this;
     }
 
+    /**
+     * @return Filter
+     */
     public function mountFromRequestedFilter()
     {
         $this->getMapper()->toBuild(['filter' => $this->getMapper()->getFilter()]);

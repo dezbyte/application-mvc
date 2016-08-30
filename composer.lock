@@ -4,24 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2f061b06cd93f7bf97bf4d909a68971f",
-    "content-hash": "a0c85af1386e067af9e18db3eb5d6615",
+    "hash": "829f486f048a699a573dadf2c99bb991",
+    "content-hash": "dc3667db2517bf879d146742059824ea",
     "packages": [
         {
-            "name": "dez-php/dez-auth",
-            "version": "v1.2.1",
+            "name": "dez-php/dez-authorizer",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dez-php/dez-auth.git",
-                "reference": "6cf41941c561204c900927c8661877cafe0042c1"
+                "url": "https://github.com/dez-php/dez-authorizer.git",
+                "reference": "379d26528270f6bd147162b11db2f910e6e8a125"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dez-php/dez-auth/zipball/6cf41941c561204c900927c8661877cafe0042c1",
-                "reference": "6cf41941c561204c900927c8661877cafe0042c1",
+                "url": "https://api.github.com/repos/dez-php/dez-authorizer/zipball/379d26528270f6bd147162b11db2f910e6e8a125",
+                "reference": "379d26528270f6bd147162b11db2f910e6e8a125",
                 "shasum": ""
             },
             "require": {
+                "dez-php/dez-data-validation": "~1.0",
                 "dez-php/dez-di": ">=1.0",
                 "dez-php/dez-http": ">=1.0",
                 "dez-php/dez-orm": ">=1.0",
@@ -31,7 +32,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Dez\\Auth\\": "src/Auth"
+                    "Dez\\Authorizer\\": "src/Auth"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -41,16 +42,16 @@
             "authors": [
                 {
                     "name": "Ivan Gontarenko",
-                    "email": "vania.gontarenko@gmail.com"
+                    "email": "stewie.dev@gmail.com"
                 }
             ],
-            "description": "Auth Component",
+            "description": "Authorizer Component",
             "keywords": [
-                "auth",
-                "dez-php auth",
+                "authorizer",
+                "dez-php authorizer",
                 "php auth"
             ],
-            "time": "2015-10-30 21:51:50"
+            "time": "2016-08-22 18:39:11"
         },
         {
             "name": "dez-php/dez-collection",
@@ -136,6 +137,48 @@
                 "php config"
             ],
             "time": "2016-04-14 17:18:34"
+        },
+        {
+            "name": "dez-php/dez-data-validation",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dez-php/dez-data-validation.git",
+                "reference": "be967d52049c345b7b7007c00ed6c5fed8fd928e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dez-php/dez-data-validation/zipball/be967d52049c345b7b7007c00ed6c5fed8fd928e",
+                "reference": "be967d52049c345b7b7007c00ed6c5fed8fd928e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Dez\\Validation\\": "src/Validation"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Gontarenko",
+                    "email": "vania.gontarenko@gmail.com"
+                }
+            ],
+            "description": "Data Validation",
+            "keywords": [
+                "data validation",
+                "dez-validation",
+                "php validation",
+                "validation"
+            ],
+            "time": "2016-03-12 20:46:09"
         },
         {
             "name": "dez-php/dez-db",
@@ -309,20 +352,21 @@
         },
         {
             "name": "dez-php/dez-http",
-            "version": "v1.4.2",
+            "version": "v1.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dez-php/dez-http.git",
-                "reference": "51b9175fc856997038fdc782f351bd8ea4225cd7"
+                "reference": "478ea1706c4d9735d7d0c08f9e4d37a1d8e5824f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dez-php/dez-http/zipball/51b9175fc856997038fdc782f351bd8ea4225cd7",
-                "reference": "51b9175fc856997038fdc782f351bd8ea4225cd7",
+                "url": "https://api.github.com/repos/dez-php/dez-http/zipball/478ea1706c4d9735d7d0c08f9e4d37a1d8e5824f",
+                "reference": "478ea1706c4d9735d7d0c08f9e4d37a1d8e5824f",
                 "shasum": ""
             },
             "require": {
-                "dez-php/dez-di": ">=1.0",
+                "dez-php/dez-di": "~1.0",
+                "dez-php/dez-url": "~1.0",
                 "php": ">=5.5"
             },
             "type": "library",
@@ -347,7 +391,7 @@
                 "http",
                 "php http"
             ],
-            "time": "2016-04-15 12:19:44"
+            "time": "2016-06-30 12:17:34"
         },
         {
             "name": "dez-php/dez-loader",
@@ -394,16 +438,16 @@
         },
         {
             "name": "dez-php/dez-orm",
-            "version": "v1.1.0",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dez-php/dez-orm.git",
-                "reference": "444d46f967177cda03ed0cc303a25c906a844441"
+                "reference": "4020acfd904952a94e6e5d2bb0b548fafb54ac95"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dez-php/dez-orm/zipball/444d46f967177cda03ed0cc303a25c906a844441",
-                "reference": "444d46f967177cda03ed0cc303a25c906a844441",
+                "url": "https://api.github.com/repos/dez-php/dez-orm/zipball/4020acfd904952a94e6e5d2bb0b548fafb54ac95",
+                "reference": "4020acfd904952a94e6e5d2bb0b548fafb54ac95",
                 "shasum": ""
             },
             "require": {
@@ -434,20 +478,20 @@
                 "php orm",
                 "simple php orm"
             ],
-            "time": "2016-03-15 13:41:14"
+            "time": "2016-04-26 12:15:37"
         },
         {
             "name": "dez-php/dez-router",
-            "version": "v1.2.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dez-php/dez-router.git",
-                "reference": "05d94424e56793aad9d234a94d4467e5bc5e930e"
+                "reference": "0ecd5cd57f17106db0202428a1a5e7d4954efa40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dez-php/dez-router/zipball/05d94424e56793aad9d234a94d4467e5bc5e930e",
-                "reference": "05d94424e56793aad9d234a94d4467e5bc5e930e",
+                "url": "https://api.github.com/repos/dez-php/dez-router/zipball/0ecd5cd57f17106db0202428a1a5e7d4954efa40",
+                "reference": "0ecd5cd57f17106db0202428a1a5e7d4954efa40",
                 "shasum": ""
             },
             "require": {
@@ -478,7 +522,7 @@
                 "php router",
                 "router"
             ],
-            "time": "2015-10-30 12:29:58"
+            "time": "2016-08-30 19:45:27"
         },
         {
             "name": "dez-php/dez-session",

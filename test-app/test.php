@@ -8,5 +8,7 @@ include_once '../vendor/autoload.php';
 new FactoryContainer();
 
 die(var_dump(
-    Application::sampleConfiguration()
+    Application::sampleConfiguration(),
+    Application::sampleConfiguration()->toJSON(),
+    Application::sampleConfiguration()->toPHP()
 ));

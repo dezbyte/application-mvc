@@ -5,8 +5,6 @@
  * @var \Dez\Mvc\GridRouteMapper\AnonymousMapper $mapper
  * */
 
-use Dez\Mvc\GridRouteMapper\Filter;
-
 $filter = $mapper->filter();
 
 ?>
@@ -25,7 +23,7 @@ $filter = $mapper->filter();
         <span>
             diagonal
         </span>
-        <li><a href="<?= $filter->leave('resolution', 'hd', 'lk')->attach('size', 17.5, 'le'); ?>">smalls</a></li>
+        <li><a href="<?= $filter->attach('resolution', 'hd', 'lk')->attach('size', 17.5, 'le'); ?>">smalls</a></li>
         <li><a href="<?= $filter->leave('resolution', 4, 'ge')->attach('size', 27, 'gt'); ?>">super big 5k</a></li>
 
         <li><a class="<?= ($mapper->has('size', 21) ? 'active' : null); ?>" href="<?= $filter->leave('size', 21); ?>">21"</a></li>
