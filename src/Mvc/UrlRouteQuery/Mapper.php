@@ -1,6 +1,6 @@
 <?php
 
-namespace Dez\Mvc\GridRouteMapper;
+namespace Dez\Mvc\UrlRouteQuery;
 
 use Dez\DependencyInjection\Injectable;
 use Dez\Http\Request;

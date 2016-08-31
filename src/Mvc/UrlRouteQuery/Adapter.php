@@ -1,6 +1,6 @@
 <?php
 
-namespace Dez\Mvc\GridRouteMapper;
+namespace Dez\Mvc\UrlRouteQuery;
 
 abstract class Adapter
 {
@@ -18,14 +18,14 @@ abstract class Adapter
      * @var array
      */
     static public $criteria = [
-        Mapper::MAPPER_EQUAL => '=',
-        Mapper::MAPPER_LIKE => 'LIKE',
-        Mapper::MAPPER_NOT_LIKE => 'NOT LIKE',
-        Mapper::MAPPER_GREATER_THAN => '>',
-        Mapper::MAPPER_GREATER_THAN_EQUAL => '>=',
-        Mapper::MAPPER_LESS_THAN => '<',
-        Mapper::MAPPER_LESS_THAN_EQUAL => '<=',
-        Mapper::MAPPER_NOT_EQUAL => '!=',
+        Filter::FILTER_EQUAL => '=',
+        Filter::FILTER_LIKE => 'LIKE',
+        Filter::FILTER_NOT_LIKE => 'NOT LIKE',
+        Filter::FILTER_GREATER_THAN => '>',
+        Filter::FILTER_GREATER_THAN_EQUAL => '>=',
+        Filter::FILTER_LESS_THAN => '<',
+        Filter::FILTER_LESS_THAN_EQUAL => '<=',
+        Filter::FILTER_NOT_EQUAL => '!=',
     ];
 
     /**

@@ -1,5 +1,5 @@
 <?php
 
-namespace Dez\Mvc\GridRouteMapper;
+namespace Dez\Mvc\UrlRouteQuery;
 
 class MapperException extends \Exception {}

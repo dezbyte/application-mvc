@@ -2,7 +2,7 @@
 
 /**
  * @var string $content
- * @var \Dez\Mvc\GridRouteMapper\AnonymousMapper $mapper
+ * @var \Dez\Mvc\UrlRouteQuery\AnonymousMapper $mapper
  * */
 
 $filter = $mapper->filter();

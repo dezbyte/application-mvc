@@ -4,8 +4,8 @@
 
     use Dez\Http\Response;
     use Dez\Mvc\Controller;
-    use Dez\Mvc\GridRouteMapper\AnonymousMapper;
-    use Dez\Mvc\GridRouteMapper\Mapper;
+    use Dez\Mvc\UrlRouteQuery\AnonymousMapper;
+    use Dez\Mvc\UrlRouteQuery\Mapper;
 
     class IndexController extends Controller
     {

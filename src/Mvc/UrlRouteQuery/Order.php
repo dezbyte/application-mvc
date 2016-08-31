@@ -1,6 +1,6 @@
 <?php
 
-namespace Dez\Mvc\GridRouteMapper;
+namespace Dez\Mvc\UrlRouteQuery;
 
 class Order implements \IteratorAggregate, \JsonSerializable {
 

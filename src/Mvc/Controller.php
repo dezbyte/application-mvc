@@ -7,9 +7,9 @@ use Dez\Mvc\Controller\Dispatcher;
 use Dez\Mvc\Controller\MvcException;
 use Dez\Mvc\Controller\ControllerInterface;
 use Dez\DependencyInjection\ContainerInterface;
-use Dez\Mvc\GridRouteMapper\Adapter\OrmQuery;
-use Dez\Mvc\GridRouteMapper\AnonymousMapper;
-use Dez\Mvc\GridRouteMapper\Mapper;
+use Dez\Mvc\UrlRouteQuery\Adapter\OrmQuery;
+use Dez\Mvc\UrlRouteQuery\AnonymousMapper;
+use Dez\Mvc\UrlRouteQuery\Mapper;
 use Dez\ORM\Model\QueryBuilder;
 use Dez\Url\Builder;
 
@@ -135,7 +135,7 @@ abstract class Controller implements ControllerInterface
      * @param Mapper $mapper
      * @param QueryBuilder $queryBuilder
      * @return AnonymousMapper
-     * @throws GridRouteMapper\MapperException
+     * @throws UrlRouteQuery\MapperException
      */
     public function grid(Mapper $mapper, QueryBuilder $queryBuilder)
     {

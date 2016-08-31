@@ -1,10 +1,10 @@
 <?php
 
-namespace Dez\Mvc\GridRouteMapper\Adapter;
+namespace Dez\Mvc\UrlRouteQuery\Adapter;
 
-use Dez\Mvc\GridRouteMapper\Mapper;
-use Dez\Mvc\GridRouteMapper\MapperException;
-use Dez\Mvc\GridRouteMapper\Adapter;
+use Dez\Mvc\UrlRouteQuery\Mapper;
+use Dez\Mvc\UrlRouteQuery\MapperException;
+use Dez\Mvc\UrlRouteQuery\Adapter;
 use Dez\ORM\Model\QueryBuilder;
 
 class OrmQuery extends Adapter {
