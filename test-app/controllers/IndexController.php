@@ -5,7 +5,6 @@
     use Dez\Http\Response;
     use Dez\Mvc\Controller;
     use Dez\Mvc\UrlRouteQuery\AnonymousMapper;
-    use Dez\Mvc\UrlRouteQuery\Mapper;
 
     class IndexController extends Controller
     {
@@ -23,7 +22,6 @@
 
             $mapper->processRequestParams();
 
-            $this->view->setMainLayout('blank');
             $this->view->set('mapper', $mapper->path('index/index'));
 
 //            $this->view->set('content', $this->execute([

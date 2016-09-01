@@ -2,47 +2,19 @@
 
 namespace Dez\Mvc;
 
-use Dez\Authorizer\Adapter\Session;
-use Dez\Authorizer\Adapter\Token;
 use Dez\Config\Config;
-use Dez\Db\Connection;
 use Dez\DependencyInjection\Injectable;
 use Dez\DependencyInjection\Service;
-use Dez\EventDispatcher\Dispatcher;
-use Dez\Flash\Adapter as Flash;
 use Dez\Http\Cookies;
 use Dez\Http\Request;
 use Dez\Http\Response;
-use Dez\Loader\Loader;
 use Dez\Mvc\Controller\Dispatcher as ControllerDispatcher;
 use Dez\Mvc\Controller\MvcException;
 use Dez\Mvc\Controller\Page404Exception;
 use Dez\Router\Router;
 use Dez\Session\Adapter;
-use Dez\Url\Url;
-use Dez\View\View;
 
-
-/**
- * Class Application
- * @package Dez\Mvc
- *
- * @property Loader loader
- * @property Config config
- * @property Dispatcher eventDispatcher
- * @property Dispatcher event
- * @property Request request
- * @property Cookies cookies
- * @property Response response
- * @property Adapter session
- * @property Router router
- * @property Url url
- * @property View view
- * @property Connection db
- * @property Token|Session auth
- * @property Flash flash
- */
-class Application extends Injectable
+class Application extends Injectable implements InjectableAware
 {
 
     protected $controllerNamespace = '\\App\\Controller\\';
@@ -179,10 +151,10 @@ class Application extends Injectable
      */
     public static function sampleConfiguration()
     {
-        $configurationFilePath = realpath(__DIR__ . '/../sample.configuration.ini');
+        $configurationFilePath = realpath(__DIR__ . '/../sample.configuration.php');
 
         $config = Config::factory($configurationFilePath);
-        $config['config-file'] = $configurationFilePath;
+        $config['sample_config_file'] = $configurationFilePath;
 
         return $config;
     }

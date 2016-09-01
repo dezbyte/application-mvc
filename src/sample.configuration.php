@@ -2,17 +2,24 @@
 
 return [
     'application' => [
-        'staticPath' => '/static/',
-        'basePath' => '/',
+        'static_path' => '/static/',
+        'base_path' => '/',
         'autoload' => [
             'MySite\\Controllers' => '/var/www/site/app/controllers',
         ],
-        'controllerNamespace' => 'MySite\\Controllers\\',
-        'modelDirectory' => '/var/www/site/app/models',
-        'controllerDirectory' => '/var/www/site/app/controllers',
-        'viewDirectory' => '/var/www/site/app/templates',
+        'model' => [
+            'root_directory' => '/var/www/site/app/models'
+        ],
+        'controller' => [
+            'root_directory' => '/var/www/site/app/controllers',
+            'namespace' => 'MySite\\Controllers\\',
+        ],
+        'view' => [
+            'root_directory' => '/var/www/site/app/templates',
+        ],
     ],
     'db' => [
+        'connection_name' => 'development',
         'connection' => [
             'development' => [
                 'dsn' => 'mysql:host=localhost;dbname=my-site',

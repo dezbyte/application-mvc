@@ -6,6 +6,6 @@
 </head>
 <body style="">
 <h2>dez-mvc application</h2>
-<?= $this->section( 'content' ); ?>
+<?= $content; ?>
 </body>
 </html>
