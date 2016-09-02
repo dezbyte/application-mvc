@@ -11,9 +11,9 @@ use Dez\Http\Cookies;
 use Dez\Http\Request;
 use Dez\Http\Response;
 use Dez\Loader\Loader;
-use Dez\Mvc\View\AdapterInterface;
 use Dez\Router\Router;
 use Dez\Session\Adapter;
+use Dez\Template\TemplateInterface;
 use Dez\Url\Url;
 use Dez\Flash\Adapter as Flash;
 
@@ -34,8 +34,8 @@ use Dez\Flash\Adapter as Flash;
  * @property Connection db
  * @property Token|Session auth
  * @property Flash flash
- * @property AdapterInterface view
- * @property AdapterInterface template
+ * @property TemplateInterface view
+ * @property TemplateInterface template
  */
 interface InjectableAware
 {

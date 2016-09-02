@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1298650048005c621e2a3c305fdbdd22",
+    "hash": "3ed66c3f22aca64bffb24dfd9d36cbd0",
     "content-hash": "190e5e676e5f7ff92c692b88852c8fdd",
     "packages": [
         {
@@ -609,16 +609,16 @@
         },
         {
             "name": "dez-php/dez-template",
-            "version": "v0.1.0",
+            "version": "v0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dez-php/dez-template.git",
-                "reference": "ddc3c9f7a969b9229cfef65de8ed85ba8c77a33b"
+                "reference": "5c2a9e609f9f0937e0f3252d53fec322557dd9ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dez-php/dez-template/zipball/ddc3c9f7a969b9229cfef65de8ed85ba8c77a33b",
-                "reference": "ddc3c9f7a969b9229cfef65de8ed85ba8c77a33b",
+                "url": "https://api.github.com/repos/dez-php/dez-template/zipball/5c2a9e609f9f0937e0f3252d53fec322557dd9ca",
+                "reference": "5c2a9e609f9f0937e0f3252d53fec322557dd9ca",
                 "shasum": ""
             },
             "require": {
@@ -648,7 +648,7 @@
                 "template",
                 "view"
             ],
-            "time": "2016-09-01 18:28:12"
+            "time": "2016-09-02 07:31:51"
         },
         {
             "name": "dez-php/dez-url",

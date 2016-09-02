@@ -5,14 +5,11 @@ namespace Dez\Mvc;
 use Dez\Config\Config;
 use Dez\DependencyInjection\Injectable;
 use Dez\DependencyInjection\Service;
-use Dez\Http\Cookies;
-use Dez\Http\Request;
 use Dez\Http\Response;
-use Dez\Mvc\Controller\Dispatcher as ControllerDispatcher;
+use Dez\Mvc\Controller\ControllerResolver;
 use Dez\Mvc\Controller\MvcException;
 use Dez\Mvc\Controller\Page404Exception;
 use Dez\Router\Router;
-use Dez\Session\Adapter;
 
 class Application extends Injectable implements InjectableAware
 {
@@ -41,23 +38,27 @@ class Application extends Injectable implements InjectableAware
 
         if ($router->isFounded()) {
 
-            $dispatcher = new ControllerDispatcher($this->getDi());
+            $resolver = new ControllerResolver($this->getDi());
 
-            $dispatcher->setNamespace($this->getControllerNamespace());
-            $dispatcher->setController($router->getController());
-            $dispatcher->setAction($router->getAction());
-            $dispatcher->setParams($router->getMatches());
+            $namespace = null === $router->getNamespace()
+                ? $this->getControllerNamespace()
+                : $router->getNamespace();
+
+            $resolver->setNamespace($namespace);
+            $resolver->setController($router->getController());
+            $resolver->setAction($router->getAction());
+            $resolver->setParams($router->getMatches());
+
+            die(var_dump($resolver->execute()));
 
             try {
-                $content = $dispatcher->dispatch();
+                $content = $resolver->dispatch();
 
-                if ($this->response->getBodyFormat() == Response::RESPONSE_HTML) {
-                    if ($content === null) {
-                        $this->view->addLayout("layouts/{$dispatcher->getController()}");
-                        $content = $this->render("{$dispatcher->getController()}/{$dispatcher->getAction()}");
-                    }
-                    $this->response->setContent($content);
+                if (null === $content && $this->response->getBodyFormat() == Response::RESPONSE_HTML) {
+                    $content = $this->render("{$resolver->getController()}/{$resolver->getAction()}");
                 }
+
+                $this->response->setContent($content);
 
                 $this->event->dispatch(MvcEvent::ON_AFTER_APP_RUN, new MvcEvent($this));
             } catch (Page404Exception $exception) {

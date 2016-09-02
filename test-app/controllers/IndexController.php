@@ -1,54 +1,59 @@
 <?php
 
-    namespace App\Controller;
+namespace App\Controller;
 
-    use Dez\Http\Response;
-    use Dez\Mvc\Controller;
-    use Dez\Mvc\UrlRouteQuery\AnonymousMapper;
+use Dez\Http\Response;
+use Dez\Mvc\Controller;
+use Dez\Mvc\UrlRouteQuery\AnonymousMapper;
 
-    class IndexController extends Controller
+class IndexController extends Controller
+{
+
+    public function __construct()
+    {
+        $this->setLayout('index');
+    }
+
+    public function indexAction($id = 0)
     {
 
-        public function indexAction( $id )
-        {
-            
 //            $this->grid(Users::query());
 
-            $mapper = new AnonymousMapper();
-            $mapper->setDi($this->getDi());
+        $mapper = new AnonymousMapper();
+        $mapper->setDi($this->getDi());
 
-            $mapper->setAllowedFilter(['id', 'email', 'name', 'salary', 'size', 'vendor', 'price', 'currency']);
-            $mapper->setAllowedOrder(['id', 'views']);
+        $mapper->setAllowedFilter(['id', 'email', 'name', 'salary', 'size', 'vendor', 'price', 'currency']);
+        $mapper->setAllowedOrder(['id', 'views']);
 
-            $mapper->processRequestParams();
+        $mapper->processRequestParams();
 
-            $this->view->set('mapper', $mapper->path('index/index'));
+        $this->view->set('mapper', $mapper->path('index/index'));
 
 //            $this->view->set('content', $this->execute([
 //                'action' => 'test1',
 //            ], true));
-        }
-
-        public function test1Action()
-        {
-            $this->view->set('content', __METHOD__);
-            $this->view->set('sub_content', $this->execute([
-                'action' => 'test2',
-                'params' => [__METHOD__]
-            ]));
-        }
-
-        public function test2Action()
-        {
-            return __METHOD__;
-        }
-
-        public function helloAction ()
-        {
-            $this->view->set('controller', $this->execute([
-                'action' => 'test2'
-            ]));
-            $this->response->setContent([1]);
-        }
-
     }
+
+    public function test1Action()
+    {
+        $this->view->set('content', __METHOD__);
+        $this->view->set('sub_content', $this->execute([
+            'action' => 'test2',
+            'params' => [__METHOD__]
+        ]));
+    }
+
+    public function test2Action()
+    {
+        return __METHOD__;
+    }
+
+    public function helloAction()
+    {
+        $this->view->set('controller', $this->execute([
+            'action' => 'test2'
+        ]));
+        $this->response->setContent([1]);
+    }
+
+}

@@ -5,6 +5,7 @@ namespace TestApp;
 // composer autoload
 use Dez\Config\Config;
 use Dez\Mvc\Application\ConfigurableApplication;
+use Dez\Mvc\Controller\RuntimeMvcException;
 
 include_once '../vendor/autoload.php';
 

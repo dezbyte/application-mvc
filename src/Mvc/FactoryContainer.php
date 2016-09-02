@@ -11,9 +11,9 @@ use Dez\Http\Cookies;
 use Dez\Http\Request;
 use Dez\Http\Response;
 use Dez\Loader\Loader;
-use Dez\Mvc\View\NullAdapter;
 use Dez\Router\Router;
 use Dez\Session\Adapter\Files;
+use Dez\Template\NullTemplate;
 use Dez\Url\Url;
 
 class FactoryContainer extends Container
@@ -34,7 +34,7 @@ class FactoryContainer extends Container
             'session' => new Service('session', new Files()),
             'url' => new Service('url', new Url()),
             'flash' => new Service('flash', new FlashSession()),
-            'view' => new Service('view', new NullAdapter()),
+            'view' => new Service('view', new NullTemplate()),
         ];
 
         // Make alias

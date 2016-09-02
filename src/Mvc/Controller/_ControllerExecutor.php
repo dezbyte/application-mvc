@@ -7,18 +7,47 @@ use Dez\DependencyInjection\ContainerInterface;
 use Dez\Mvc\Controller;
 use Dez\Mvc\MvcEvent;
 
-class Dispatcher
+/**
+ * Class Dispatcher
+ * @package Dez\Mvc\Controller
+ */
+class _ControllerExecutor
 {
 
     /**l
      * @var Container
      */
     static protected $di;
+
+    /**
+     * @var
+     */
     protected $namespace;
+
+    /**
+     * @var
+     */
     protected $controller;
+
+    /**
+     * @var
+     */
     protected $action;
+
+    /**
+     * @var array
+     */
     protected $params = [];
 
+    /**
+     * @var
+     */
+    protected $layout;
+
+    /**
+     * Dispatcher constructor.
+     * @param ContainerInterface $di
+     */
     public function __construct(ContainerInterface $di)
     {
         static::$di = $di;
@@ -158,6 +187,22 @@ class Dispatcher
     {
         $this->params = $params;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLayout()
+    {
+        return $this->layout;
+    }
+
+    /**
+     * @param mixed $layout
+     */
+    public function setLayout($layout)
+    {
+        $this->layout = $layout;
     }
 
 }

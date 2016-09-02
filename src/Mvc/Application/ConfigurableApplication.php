@@ -7,6 +7,7 @@ use Dez\Mvc\Application;
 use Dez\Mvc\Controller\MvcException;
 use Dez\Mvc\View\TemplateAdapter;
 use Dez\ORM\Connection;
+use Dez\Template\Template;
 
 abstract class ConfigurableApplication extends Application
 {
@@ -61,8 +62,9 @@ abstract class ConfigurableApplication extends Application
 
             if ($applicationConfig->has('view')) {
                 $this->dependencyInjector->set('view', function() use ($applicationConfig) {
-                    TemplateAdapter::configuration($applicationConfig['view']);
-                    return new TemplateAdapter();
+                    $services = iterator_to_array($this->dependencyInjector);
+                    $directory = $applicationConfig['view']['root_directory'];
+                    return new Template($directory, $services);
                 });
             } else {
                 throw new MvcException('Required configuration for view don`ts exists');

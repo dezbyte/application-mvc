@@ -3,7 +3,7 @@
 namespace Dez\Mvc;
 
 use Dez\Http\Response;
-use Dez\Mvc\Controller\Dispatcher;
+use Dez\Mvc\Controller\ControllerResolver;
 use Dez\Mvc\Controller\MvcException;
 use Dez\Mvc\Controller\ControllerInterface;
 use Dez\DependencyInjection\ContainerInterface;
@@ -40,6 +40,11 @@ abstract class Controller implements ControllerInterface
      * @var array
      */
     protected $params = [];
+
+    /**
+     * @var null|string
+     */
+    protected $layout = null;
 
 
     /**
@@ -90,28 +95,28 @@ abstract class Controller implements ControllerInterface
      */
     public function execute(array $parameters = [], $render = false)
     {
-        if(! isset($parameters['action'])) {
-            throw new MvcException("Action required for forwarding");
-        }
-
-        $dispatcher = new Dispatcher($this->getDi());
-
-        $dispatcher->setNamespace(isset($parameters['namespace']) ? $parameters['namespace'] : $this->getNamespace());
-        $dispatcher->setController(isset($parameters['controller']) ? $parameters['controller'] : $this->getName());
-
-        if(isset($parameters['params'], $parameters['params'][0])) {
-            $dispatcher->setParams($parameters['params']);
-        }
-
-        $dispatcher->setAction($parameters['action']);
-
-        $content = $dispatcher->dispatch();
-
-        if($render === true) {
-            $content = $this->view->fetch("{$dispatcher->getController()}/{$dispatcher->getAction()}");
-        }
-
-        return $content;
+//        if(! isset($parameters['action'])) {
+//            throw new MvcException("Action required for forwarding");
+//        }
+//
+//        $dispatcher = new ControllerExecutor($this->getDi());
+//
+//        $dispatcher->setNamespace(isset($parameters['namespace']) ? $parameters['namespace'] : $this->getNamespace());
+//        $dispatcher->setController(isset($parameters['controller']) ? $parameters['controller'] : $this->getName());
+//
+//        if(isset($parameters['params'], $parameters['params'][0])) {
+//            $dispatcher->setParams($parameters['params']);
+//        }
+//
+//        $dispatcher->setAction($parameters['action']);
+//
+//        $content = $dispatcher->dispatch();
+//
+//        if($render === true) {
+//            $content = $this->view->render("{$dispatcher->getController()}/{$dispatcher->getAction()}");
+//        }
+//
+//        return $content;
     }
 
     /**
@@ -134,10 +139,10 @@ abstract class Controller implements ControllerInterface
     /**
      * @param Mapper $mapper
      * @param QueryBuilder $queryBuilder
-     * @return AnonymousMapper
+     * @return Mapper
      * @throws UrlRouteQuery\MapperException
      */
-    public function grid(Mapper $mapper, QueryBuilder $queryBuilder)
+    public function injectMapper(Mapper $mapper, QueryBuilder $queryBuilder)
     {
         $source = new OrmQuery($queryBuilder);
 
@@ -242,6 +247,22 @@ abstract class Controller implements ControllerInterface
         $this->params = $params;
 
         return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getLayout()
+    {
+        return $this->layout;
+    }
+
+    /**
+     * @param null|string $layout
+     */
+    public function setLayout($layout)
+    {
+        $this->layout = $layout;
     }
 
 }
