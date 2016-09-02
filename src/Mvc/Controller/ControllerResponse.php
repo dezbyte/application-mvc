@@ -10,7 +10,7 @@ use Dez\Mvc\Controller;
 class ControllerResponse {
 
     /**
-     * @var Controller
+     * @var ControllerInterface
      */
     protected $controllerInstance;
 
@@ -20,7 +20,7 @@ class ControllerResponse {
     protected $controllerContent = null;
 
     /**
-     * @return Controller
+     * @return ControllerInterface
      */
     public function getControllerInstance()
     {
@@ -28,9 +28,9 @@ class ControllerResponse {
     }
 
     /**
-     * @param Controller $controllerInstance
+     * @param ControllerInterface $controllerInstance
      */
-    public function setControllerInstance(Controller $controllerInstance)
+    public function setControllerInstance(ControllerInterface $controllerInstance)
     {
         $this->controllerInstance = $controllerInstance;
     }

@@ -57,9 +57,14 @@ class ControllerResolver
         try {
             $reflectionClass = new \ReflectionClass($class);
 
-            $controller = $reflectionClass->newInstance();
+            if($reflectionClass->implementsInterface(ControllerInterface::class)) {
+                $controller = $reflectionClass->newInstance();
+                $this->getResponse()->setControllerInstance($controller);
+            }
 
-            $this->getResponse()->setControllerInstance($controller);
+
+
+
 
 die(var_dump($this));
 
