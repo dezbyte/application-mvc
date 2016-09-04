@@ -28,6 +28,7 @@ class IndexController extends Controller
         $mapper->processRequestParams();
 
         $this->view->set('mapper', $mapper->path('index/index'));
+        return __FILE__;
 
 //            $this->view->set('content', $this->execute([
 //                'action' => 'test1',

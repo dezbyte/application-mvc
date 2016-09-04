@@ -6,7 +6,7 @@ namespace Dez\Mvc\Controller;
  * Class RuntimeMvcException
  * @package Dez\Mvc\Controller
  */
-class RuntimeMvcException extends \ErrorException {
+class RuntimeMvcException extends ReplaceException {
 
     /**
      * RuntimeMvcException constructor.

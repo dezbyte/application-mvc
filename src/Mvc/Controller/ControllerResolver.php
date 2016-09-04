@@ -60,13 +60,17 @@ class ControllerResolver
             if($reflectionClass->implementsInterface(ControllerInterface::class)) {
                 $controller = $reflectionClass->newInstance();
                 $this->getResponse()->setControllerInstance($controller);
+
+                $reflectionMethod = new \ReflectionMethod($class, $this->getActionCamelize());
+
+                $method =$reflectionMethod->invokeArgs($this->getParams());
+
+//                die(var_dump($reflectionMethod));
+            } else {
+                throw new RuntimeMvcException('Controller should implemented interface [:name]', [
+                    'name' => ControllerInterface::class
+                ]);
             }
-
-
-
-
-
-die(var_dump($this));
 
         } catch (\ReflectionException $exception) {
             $this->container->get('event')->dispatch(MvcEvent::ON_PAGE_404, new MvcEvent($this));
@@ -74,6 +78,8 @@ die(var_dump($this));
         } catch (\Exception $exception) {
             throw new RuntimeMvcException($exception->getMessage());
         }
+
+        return $this->response;
 
         $controller = new $class();
 

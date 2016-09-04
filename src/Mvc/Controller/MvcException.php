@@ -1,5 +1,7 @@
 <?php
 
-    namespace Dez\Mvc\Controller;
+namespace Dez\Mvc\Controller;
 
-    class MvcException extends \Exception {  }
+class MvcException extends ReplaceException
+{
+}
