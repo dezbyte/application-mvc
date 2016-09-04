@@ -370,22 +370,22 @@ abstract class Mapper extends Injectable
             $parameters = $this->toBuild;
             $urlPartials = [];
 
-            if(count($parameters['filter']) > 0) foreach ($parameters['filter'] as $column => $filter) {
+            if(isset($parameters['filter']) && count($parameters['filter']) > 0)
+                foreach ($parameters['filter'] as $column => $filter) {
+                    $urlPartials[] = "{$this->getPrefix()}filter-{$column}";
+                    $filterConditions = [];
 
-                $urlPartials[] = "{$this->getPrefix()}filter-{$column}";
-                $filterConditions = [];
+                    foreach ($filter as $criterion => $value) {
+                        $filterConditions[] = "{$criterion}-{$value}";
+                    }
 
-                foreach ($filter as $criterion => $value) {
-                    $filterConditions[] = "{$criterion}-{$value}";
+                    $urlPartials[] = implode('-', $filterConditions);
                 }
 
-                $urlPartials[] = implode('-', $filterConditions);
-
-            }
-
-            if(count($parameters['order']) > 0) foreach ($parameters['order'] as $column => $vector) {
-                $urlPartials[] = "{$this->getPrefix()}order-{$column}/{$vector}";
-            }
+            if(isset($parameters['order']) && count($parameters['order']) > 0)
+                foreach ($parameters['order'] as $column => $vector) {
+                    $urlPartials[] = "{$this->getPrefix()}order-{$column}/{$vector}";
+                }
 
             $filterRoute = implode('/', $urlPartials);
 

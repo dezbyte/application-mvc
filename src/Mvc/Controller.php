@@ -8,7 +8,6 @@ use Dez\Mvc\Controller\MvcException;
 use Dez\Mvc\Controller\ControllerInterface;
 use Dez\DependencyInjection\ContainerInterface;
 use Dez\Mvc\UrlRouteQuery\Adapter\OrmQuery;
-use Dez\Mvc\UrlRouteQuery\AnonymousMapper;
 use Dez\Mvc\UrlRouteQuery\Mapper;
 use Dez\ORM\Model\QueryBuilder;
 use Dez\Url\Builder;
@@ -45,6 +44,16 @@ abstract class Controller implements ControllerInterface
      * @var null|string
      */
     protected $layout = null;
+
+    /**
+     * @var \ReflectionClass
+     */
+    protected $reflectionClass = null;
+
+    /**
+     * @var \ReflectionMethod
+     */
+    protected $reflectionAction = null;
 
 
     /**
@@ -95,28 +104,29 @@ abstract class Controller implements ControllerInterface
      */
     public function execute(array $parameters = [], $render = false)
     {
-//        if(! isset($parameters['action'])) {
-//            throw new MvcException("Action required for forwarding");
-//        }
-//
-//        $dispatcher = new ControllerExecutor($this->getDi());
-//
-//        $dispatcher->setNamespace(isset($parameters['namespace']) ? $parameters['namespace'] : $this->getNamespace());
-//        $dispatcher->setController(isset($parameters['controller']) ? $parameters['controller'] : $this->getName());
-//
-//        if(isset($parameters['params'], $parameters['params'][0])) {
-//            $dispatcher->setParams($parameters['params']);
-//        }
-//
-//        $dispatcher->setAction($parameters['action']);
-//
-//        $content = $dispatcher->dispatch();
-//
-//        if($render === true) {
-//            $content = $this->view->render("{$dispatcher->getController()}/{$dispatcher->getAction()}");
-//        }
-//
-//        return $content;
+        if(! isset($parameters['action'])) {
+            throw new MvcException("Action required for forwarding");
+        }
+
+        $resolver = new ControllerResolver($this->getDi());
+
+        $resolver->setNamespace(isset($parameters['namespace']) ? $parameters['namespace'] : $this->getNamespace());
+        $resolver->setController(isset($parameters['controller']) ? $parameters['controller'] : $this->getName());
+
+        if(isset($parameters['params'], $parameters['params'][0])) {
+            $resolver->setParams($parameters['params']);
+        }
+
+        $resolver->setAction($parameters['action']);
+
+        $response = $resolver->execute();
+        $content = $response->getControllerContent();
+
+        if($render === true) {
+            $content = $this->view->render("{$resolver->getController()}/{$resolver->getAction()}");
+        }
+
+        return $content;
     }
 
     /**
@@ -263,6 +273,59 @@ abstract class Controller implements ControllerInterface
     public function setLayout($layout)
     {
         $this->layout = $layout;
+    }
+
+    /**
+     * @return \ReflectionClass
+     */
+    public function getReflectionClass()
+    {
+        return $this->reflectionClass;
+    }
+
+    /**
+     * @param \ReflectionClass $reflectionClass
+     * @return $this
+     */
+    public function setReflectionClass($reflectionClass)
+    {
+        $this->reflectionClass = $reflectionClass;
+        return $this;
+    }
+
+    /**
+     * @return \ReflectionMethod
+     */
+    public function getReflectionAction()
+    {
+        return $this->reflectionAction;
+    }
+
+    /**
+     * @param \ReflectionMethod $reflectionAction
+     * @return $this
+     */
+    public function setReflectionAction($reflectionAction)
+    {
+        $this->reflectionAction = $reflectionAction;
+        return $this;
+    }
+
+    /**
+     * @return ContainerInterface
+     */
+    public static function getContainer()
+    {
+        return static::$container;
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @return $this
+     */
+    public static function setContainer($container)
+    {
+        self::$container = $container;
     }
 
 }

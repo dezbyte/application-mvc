@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title><?= $title; ?></title>
 </head>
 <body style="background-color: bisque; padding: 10px; border: 2px solid darkred">
-<h2>YumXXX</h2>
-<?= $this->section( 'content' ); ?>
+<h2><?= $title; ?></h2>
+<?= $content; ?>
 </body>
 </html>

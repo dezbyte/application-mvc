@@ -39,6 +39,7 @@ class FactoryContainer extends Container
 
         // Make alias
         $this->services['eventDispatcher'] = $this->services['event'];
+        $this->services['template'] = $this->services['view'];
     }
 
 }

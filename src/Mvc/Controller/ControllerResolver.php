@@ -6,16 +6,20 @@ use Dez\DependencyInjection\ContainerInterface;
 use Dez\Mvc\Controller;
 use Dez\Mvc\MvcEvent;
 
+/**
+ * Class ControllerResolver
+ * @package Dez\Mvc\Controller
+ */
 class ControllerResolver
 {
 
     /**
-     * @var ContainerInterface|null
+     * @var ContainerInterface
      */
     protected $container = null;
 
     /**
-     * @var ControllerResponse|null
+     * @var ControllerResponse
      */
     protected $response = null;
 
@@ -49,66 +53,55 @@ class ControllerResolver
         $this->response = new ControllerResponse();
     }
 
+    /**
+     * @return ControllerResponse
+     * @throws Page404Exception
+     * @throws RuntimeMvcException
+     */
     public function execute()
     {
-
         $class = $this->getControllerClass();
 
         try {
             $reflectionClass = new \ReflectionClass($class);
 
             if($reflectionClass->implementsInterface(ControllerInterface::class)) {
+                /** @var ControllerInterface $controller */
                 $controller = $reflectionClass->newInstance();
+                $controller->setReflectionClass($reflectionClass);
                 $this->getResponse()->setControllerInstance($controller);
 
+                $controller->setDi($this->container);
+
                 $reflectionMethod = new \ReflectionMethod($class, $this->getActionCamelize());
+                $controller->setReflectionAction($reflectionMethod);
 
-                $method =$reflectionMethod->invokeArgs($this->getParams());
+                $controller->setNamespace($this->getNamespace());
+                $controller->setName($this->getController());
+                $controller->setAction($this->getAction());
+                $controller->setParams($this->getParams());
 
-//                die(var_dump($reflectionMethod));
+                $controller->beforeExecute();
+                $this->response->setControllerContent($reflectionMethod->invokeArgs($controller, $this->getParams()));
+                $controller->afterExecute();
+
+                $this->container->get('event')->dispatch(MvcEvent::ON_AFTER_RUN, new MvcEvent($controller));
             } else {
-                throw new RuntimeMvcException('Controller should implemented interface [:name]', [
+                throw new RuntimeMvcException('Controller found but it should implemented interface [:name]', [
                     'name' => ControllerInterface::class
                 ]);
             }
 
         } catch (\ReflectionException $exception) {
             $this->container->get('event')->dispatch(MvcEvent::ON_PAGE_404, new MvcEvent($this));
+            $this->container->get('event')->dispatch(MvcEvent::ON_ACTION_ERROR, new MvcEvent($exception));
             throw new Page404Exception($exception->getMessage());
         } catch (\Exception $exception) {
+            $this->container->get('event')->dispatch(MvcEvent::ON_ACTION_ERROR, new MvcEvent($exception));
             throw new RuntimeMvcException($exception->getMessage());
         }
 
         return $this->response;
-
-        $controller = new $class();
-
-        $action = $this->getActionCamelize();
-        if (!method_exists($controller, $action)) {
-            $this->container->get('event')->dispatch(MvcEvent::ON_PAGE_404, new MvcEvent($this));
-            throw new Page404Exception("Method '{$action}' in controller '{$controllerClass}' not found");
-        }
-
-        static::$di->get('event')->dispatch(MvcEvent::ON_BEFORE_RUN, new MvcEvent($controller));
-
-        try {
-            $controller->setDi(static::$di);
-
-            $controller->setNamespace($this->getNamespace());
-            $controller->setName($this->getController());
-            $controller->setAction($this->getAction());
-            $controller->setParams($this->getParams());
-
-            $controller->beforeExecute();
-            $controllerOutput = call_user_func_array([$controller, $action], $this->getParams());
-            $controller->afterExecute();
-
-            static::$di->get('event')->dispatch(MvcEvent::ON_AFTER_RUN, new MvcEvent($controller));
-        } catch (\Exception $exception) {
-            static::$di->get('event')->dispatch(MvcEvent::ON_ACTION_ERROR, new MvcEvent($exception));
-            throw new MvcException($exception->getMessage());
-        }
-
     }
 
     /**

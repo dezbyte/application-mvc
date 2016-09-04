@@ -49,13 +49,21 @@ class Application extends Injectable implements InjectableAware
             $resolver->setAction($router->getAction());
             $resolver->setParams($router->getMatches());
 
-            die(var_dump($resolver->execute()));
-
             try {
-                $content = $resolver->dispatch();
+                $response = $resolver->execute();
 
+                $content = $response->getControllerContent();
+                $controller = $response->getControllerInstance();
+
+                $this->prepareView();
                 if (null === $content && $this->response->getBodyFormat() == Response::RESPONSE_HTML) {
-                    $content = $this->render("{$resolver->getController()}/{$resolver->getAction()}");
+                    $content = $this->view->render("{$resolver->getController()}/{$resolver->getAction()}");
+                }
+
+                if(null !== $controller->getLayout()) {
+                    $content = $this->view->fetch($controller->getLayout(), [
+                        'content' => $content
+                    ]);
                 }
 
                 $this->response->setContent($content);

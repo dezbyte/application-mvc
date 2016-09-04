@@ -11,7 +11,7 @@ class IndexController extends Controller
 
     public function __construct()
     {
-        $this->setLayout('index');
+//        $this->setLayout('layout');
     }
 
     public function indexAction($id = 0)
@@ -28,7 +28,6 @@ class IndexController extends Controller
         $mapper->processRequestParams();
 
         $this->view->set('mapper', $mapper->path('index/index'));
-        return __FILE__;
 
 //            $this->view->set('content', $this->execute([
 //                'action' => 'test1',
@@ -39,6 +38,7 @@ class IndexController extends Controller
     {
         $this->view->set('content', __METHOD__);
         $this->view->set('sub_content', $this->execute([
+            'namespace' => '\\OpenShop\\Controllers',
             'action' => 'test2',
             'params' => [__METHOD__]
         ]));

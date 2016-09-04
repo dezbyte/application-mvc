@@ -1,11 +1,16 @@
 <?php
 
 /**
+ * @var \Dez\Template\Core\Compiler $this
  * @var string $content
  * @var \Dez\Mvc\UrlRouteQuery\AnonymousMapper $mapper
- * */
+ */
 
 $filter = $mapper->filter();
+
+$this->layout('layout', [
+    'title' => 'Hello from: ' . __FILE__
+]);
 
 ?>
 <style>

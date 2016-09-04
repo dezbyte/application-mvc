@@ -35,6 +35,6 @@ return [
     'server' => [
         'timezone' => 'Europe/Kiev',
         'displayErrors' => 'On',
-        'errorLevel' => '1',
+        'errorLevel' => E_ALL,
     ],
 ];

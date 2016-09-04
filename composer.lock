@@ -609,16 +609,16 @@
         },
         {
             "name": "dez-php/dez-template",
-            "version": "v0.1.2",
+            "version": "v0.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dez-php/dez-template.git",
-                "reference": "5c2a9e609f9f0937e0f3252d53fec322557dd9ca"
+                "reference": "c7b5d30bc0ed6fa98019e3cf25aa9b424704a065"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dez-php/dez-template/zipball/5c2a9e609f9f0937e0f3252d53fec322557dd9ca",
-                "reference": "5c2a9e609f9f0937e0f3252d53fec322557dd9ca",
+                "url": "https://api.github.com/repos/dez-php/dez-template/zipball/c7b5d30bc0ed6fa98019e3cf25aa9b424704a065",
+                "reference": "c7b5d30bc0ed6fa98019e3cf25aa9b424704a065",
                 "shasum": ""
             },
             "require": {
@@ -648,7 +648,7 @@
                 "template",
                 "view"
             ],
-            "time": "2016-09-02 07:31:51"
+            "time": "2016-09-04 10:41:12"
         },
         {
             "name": "dez-php/dez-url",
