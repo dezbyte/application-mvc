@@ -62,10 +62,6 @@ class ControllerResolver
                 $this->getResponse()->setControllerInstance($controller);
             }
 
-
-
-
-
 die(var_dump($this));
 
         } catch (\ReflectionException $exception) {
