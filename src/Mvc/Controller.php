@@ -46,6 +46,11 @@ abstract class Controller implements ControllerInterface
     protected $layout = null;
 
     /**
+     * @var null|string
+     */
+    protected $pseudoPath = null;
+
+    /**
      * @var \ReflectionClass
      */
     protected $reflectionClass = null;
@@ -273,6 +278,24 @@ abstract class Controller implements ControllerInterface
     public function setLayout($layout)
     {
         $this->layout = $layout;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPseudoPath()
+    {
+        return $this->pseudoPath;
+    }
+
+    /**
+     * @param null|string $pseudoPath
+     * @return $this
+     */
+    public function setPseudoPath($pseudoPath)
+    {
+        $this->pseudoPath = $pseudoPath;
+        return $this;
     }
 
     /**

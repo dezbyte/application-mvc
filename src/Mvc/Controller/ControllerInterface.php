@@ -91,6 +91,16 @@ interface ControllerInterface extends InjectableInterface, InjectableAware
      */
     public function setLayout($layout);
 
+    /**
+     * @return null|string
+     */
+    public function getPseudoPath();
+
+    /**
+     * @param null|string $pseudoPath
+     * @return $this
+     */
+    public function setPseudoPath($pseudoPath);
 
     /**
      * @return \ReflectionClass

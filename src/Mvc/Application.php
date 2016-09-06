@@ -57,11 +57,12 @@ class Application extends Injectable implements InjectableAware
 
                 $this->prepareView();
                 if (null === $content && $this->response->getBodyFormat() == Response::RESPONSE_HTML) {
-                    $content = $this->view->render("{$resolver->getController()}/{$resolver->getAction()}");
+                    $templatePath = "{$resolver->getController()}/{$resolver->getAction()}";
+                    $content = $this->render($templatePath, $controller->getPseudoPath());
                 }
 
                 if(null !== $controller->getLayout()) {
-                    $content = $this->view->fetch($controller->getLayout(), [
+                    $content = $this->render($controller->getLayout(), null, [
                         'content' => $content
                     ]);
                 }
@@ -123,20 +124,14 @@ class Application extends Injectable implements InjectableAware
     }
 
     /**
-     * @param $path
+     * @param string $path
+     * @param string $pseudoPath
+     * @param array $data
      * @return string
-     * @throws \Dez\Http\Exception
-     * @throws \Exception
      */
-    protected function render($path)
+    protected function render($path, $pseudoPath, array $data = [])
     {
-        $this->response->sendCookies()->sendHeaders();
-        $content = null;
-
-        if ($this->response->isEnableBody()) {
-            $this->prepareView();
-            $content = $this->view->render($path);
-        }
+        $content = $this->view->fetch(null === $pseudoPath ? $path : "$pseudoPath::$path", $data);
 
         return $content;
     }
