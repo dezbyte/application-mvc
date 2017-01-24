@@ -1,11 +1,11 @@
 {
-  "name": "dez-php/dez-mvc-app",
-  "description": "MVC Application",
+  "name": "dezbyte/application-mvc",
+  "description": "MVC Application base on DezPHP Components",
   "keywords": ["php mvc","mvc","mvc app","dez-php mvc"],
   "authors": [
     {
       "name": "Ivan Gontarenko",
-      "email": "vania.gontarenko@gmail.com"
+      "email": "stewie.dev@gmail.com"
     }
   ],
   "license": "MIT",
@@ -15,14 +15,12 @@
     "dez-php/dez-di": "~1.0",
     "dez-php/dez-loader": "~1.0",
     "dez-php/dez-configuration": "~1.0",
-    "dez-php/dez-orm": "~1.0",
     "dez-php/dez-event": "~1.0",
     "dez-php/dez-http": "~1.0",
     "dez-php/dez-url": "~1.0",
     "dez-php/dez-router": "~1.0",
     "dez-php/dez-session": "~1.0",
     "dez-php/dez-template": "~0.1",
-    "dez-php/dez-authorizer": "~2.0",
     "dez-php/dez-flash": "~1.0",
     "dez-php/dez-data-validation": "~1.0",
     "dez-php/dez-html": "~0.1"
