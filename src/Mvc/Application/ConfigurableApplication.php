@@ -71,10 +71,6 @@ abstract class ConfigurableApplication extends Application
             }
         }
 
-        if ($this->config->has('db')) {
-            Connection::init($this->config, $this->config->path('db.connection_name'));
-        }
-
         return $this;
     }
 
