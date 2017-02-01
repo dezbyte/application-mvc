@@ -2,4 +2,6 @@
 
 namespace Dez\Mvc\UrlRouteQuery;
 
-class MapperException extends \Exception {}
+class MapperException extends \Exception
+{
+}

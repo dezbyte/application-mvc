@@ -31,13 +31,11 @@ use Dez\Flash\Adapter as Flash;
  * @property Adapter session
  * @property Router router
  * @property Url url
- * @property Connection db
- * @property Token|Session auth
  * @property Flash flash
  * @property TemplateInterface view
  * @property TemplateInterface template
  */
 interface InjectableAware
 {
-
+  
 }

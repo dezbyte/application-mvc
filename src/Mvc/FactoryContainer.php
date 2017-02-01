@@ -18,28 +18,28 @@ use Dez\Url\Url;
 
 class FactoryContainer extends Container
 {
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->services = [
-            'loader' => new Service('loader', new Loader()),
-            'config' => new Service('config', new Config([])),
-            'event' => new Service('event', new Dispatcher()),
-            'request' => new Service('request', new Request()),
-            'response' => new Service('response', new Response()),
-            'cookies' => new Service('cookies', new Cookies()),
-            'router' => new Service('router', new Router()),
-            'session' => new Service('session', new Files()),
-            'url' => new Service('url', new Url()),
-            'flash' => new Service('flash', new FlashSession()),
-            'view' => new Service('view', new NullTemplate()),
-        ];
-
-        // Make alias
-        $this->services['eventDispatcher'] = $this->services['event'];
-        $this->services['template'] = $this->services['view'];
-    }
-
+  
+  public function __construct()
+  {
+    parent::__construct();
+    
+    $this->services = [
+      'loader' => new Service('loader', new Loader()),
+      'config' => new Service('config', new Config([])),
+      'event' => new Service('event', new Dispatcher()),
+      'request' => new Service('request', new Request()),
+      'response' => new Service('response', new Response()),
+      'cookies' => new Service('cookies', new Cookies()),
+      'router' => new Service('router', new Router()),
+      'session' => new Service('session', new Files()),
+      'url' => new Service('url', new Url()),
+      'flash' => new Service('flash', new FlashSession()),
+      'view' => new Service('view', new NullTemplate()),
+    ];
+    
+    // Make alias
+    $this->services['eventDispatcher'] = $this->services['event'];
+    $this->services['template'] = $this->services['view'];
+  }
+  
 }

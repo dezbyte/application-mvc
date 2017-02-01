@@ -2,8 +2,9 @@
 
 namespace Dez\Mvc\UrlRouteQuery;
 
-class AnonymousMapper extends Mapper {
-
-    protected $uniqueIdentity = null;
-
+class AnonymousMapper extends Mapper
+{
+  
+  protected $uniqueIdentity = null;
+  
 }

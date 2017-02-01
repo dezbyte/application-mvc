@@ -2,8 +2,8 @@
 
 namespace Dez\Mvc;
 
-abstract class ControllerAction {
-
-
-
+abstract class ControllerAction
+{
+  
+  
 }

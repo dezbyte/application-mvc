@@ -2,4 +2,6 @@
 
 namespace Dez\Mvc\Controller;
 
-class Page404Exception extends MvcException {}
+class Page404Exception extends MvcException
+{
+}
