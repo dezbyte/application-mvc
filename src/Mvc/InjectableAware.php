@@ -2,10 +2,7 @@
 
 namespace Dez\Mvc;
 
-use Dez\Authorizer\Adapter\Session;
-use Dez\Authorizer\Adapter\Token;
-use Dez\Config\Config;
-use Dez\Db\Connection;
+use Colibri\Parameters\ParametersCollection;
 use Dez\EventDispatcher\Dispatcher;
 use Dez\Http\Cookies;
 use Dez\Http\Request;
@@ -22,7 +19,7 @@ use Dez\Flash\Adapter as Flash;
  * @package Dez\Mvc
  *
  * @property Loader loader
- * @property Config config
+ * @property ParametersCollection config
  * @property Dispatcher eventDispatcher
  * @property Dispatcher event
  * @property Request request

@@ -4,6 +4,10 @@ namespace Dez\Mvc;
 
 use Dez\EventDispatcher\Event;
 
+/**
+ * Class MvcEvent
+ * @package Dez\Mvc
+ */
 class MvcEvent extends Event
 {
   

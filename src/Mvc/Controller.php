@@ -7,9 +7,6 @@ use Dez\Mvc\Controller\ControllerResolver;
 use Dez\Mvc\Controller\MvcException;
 use Dez\Mvc\Controller\ControllerInterface;
 use Dez\DependencyInjection\ContainerInterface;
-use Dez\Mvc\UrlRouteQuery\Adapter\OrmQuery;
-use Dez\Mvc\UrlRouteQuery\Mapper;
-use Dez\ORM\Model\QueryBuilder;
 use Dez\Url\Builder;
 
 abstract class Controller implements ControllerInterface
@@ -204,27 +201,6 @@ abstract class Controller implements ControllerInterface
   public function refresh()
   {
     return $this->response->redirect($this->router->getTargetUri())->setStatusCode(302);
-  }
-  
-  /**
-   * @param Mapper $mapper
-   * @param QueryBuilder $queryBuilder
-   * @return Mapper
-   * @throws UrlRouteQuery\MapperException
-   */
-  public function injectMapper(Mapper $mapper, QueryBuilder $queryBuilder)
-  {
-    $source = new OrmQuery($queryBuilder);
-    
-    $mapper->setDataSource($source);
-    $mapper->setDi($this->getDi());
-    
-    $mapper->processRequestParams();
-    
-    $builder = new Builder("{$this->getName()}:{$this->getAction()}", $this->getParams(), $this->router);
-    $mapper->path($builder->make());
-    
-    return $mapper;
   }
   
   /**

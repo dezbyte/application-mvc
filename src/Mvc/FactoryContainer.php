@@ -2,7 +2,7 @@
 
 namespace Dez\Mvc;
 
-use Dez\Config\Config;
+use Colibri\Parameters\ParametersCollection;
 use Dez\DependencyInjection\Container;
 use Dez\DependencyInjection\Service;
 use Dez\EventDispatcher\Dispatcher;
@@ -25,7 +25,7 @@ class FactoryContainer extends Container
     
     $this->services = [
       'loader' => new Service('loader', new Loader()),
-      'config' => new Service('config', new Config([])),
+      'config' => new Service('config', new ParametersCollection()),
       'event' => new Service('event', new Dispatcher()),
       'request' => new Service('request', new Request()),
       'response' => new Service('response', new Response()),

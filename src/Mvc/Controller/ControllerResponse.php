@@ -2,8 +2,6 @@
 
 namespace Dez\Mvc\Controller;
 
-use Dez\Mvc\Controller;
-
 /**
  * Class ControllerResponse
  * @package Dez\Mvc\Controller

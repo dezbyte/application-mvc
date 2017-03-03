@@ -3,7 +3,6 @@
 namespace Dez\Mvc\Controller;
 
 use Dez\DependencyInjection\ContainerInterface;
-use Dez\Mvc\Controller;
 use Dez\Mvc\MvcEvent;
 
 /**

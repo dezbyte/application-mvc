@@ -4,51 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8ba5a8609f9ca142c5d0eac9cb72a870",
-    "content-hash": "0c67ec2c06278d4e12eafdf4b609a8a8",
+    "hash": "93b5997f77dea79253eacee03eb8ef3c",
+    "content-hash": "b6fcd3399ae5b651b3cbd34190c9e0fc",
     "packages": [
-        {
-            "name": "dez-php/dez-configuration",
-            "version": "v1.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dez-php/dez-configuration.git",
-                "reference": "9b8cd6b62f6b53193aeb89ef9ddb104b953ab0c5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dez-php/dez-configuration/zipball/9b8cd6b62f6b53193aeb89ef9ddb104b953ab0c5",
-                "reference": "9b8cd6b62f6b53193aeb89ef9ddb104b953ab0c5",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Dez\\Config\\": "src/Config"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ivan Gontarenko",
-                    "email": "vania.gontarenko@gmail.com"
-                }
-            ],
-            "description": "DezPHP - Config",
-            "keywords": [
-                "config",
-                "dez-config",
-                "dez-php config",
-                "php config"
-            ],
-            "time": "2016-04-14 17:18:34"
-        },
         {
             "name": "dez-php/dez-data-validation",
             "version": "v1.2.0",
@@ -220,16 +178,16 @@
         },
         {
             "name": "dez-php/dez-html",
-            "version": "v0.1.4",
+            "version": "v0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dez-php/dez-html.git",
-                "reference": "8b61a5df77198d3629499b5e5921f5ce67155fa0"
+                "reference": "68b7ccf693b878a3f35bf5b3f74f5b2d38bfab58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dez-php/dez-html/zipball/8b61a5df77198d3629499b5e5921f5ce67155fa0",
-                "reference": "8b61a5df77198d3629499b5e5921f5ce67155fa0",
+                "url": "https://api.github.com/repos/dez-php/dez-html/zipball/68b7ccf693b878a3f35bf5b3f74f5b2d38bfab58",
+                "reference": "68b7ccf693b878a3f35bf5b3f74f5b2d38bfab58",
                 "shasum": ""
             },
             "require": {
@@ -257,7 +215,7 @@
                 "html maker",
                 "php html"
             ],
-            "time": "2017-01-26 18:28:01"
+            "time": "2017-02-16 15:53:14"
         },
         {
             "name": "dez-php/dez-http",
@@ -520,6 +478,104 @@
                 "url builder"
             ],
             "time": "2016-03-23 11:17:36"
+        },
+        {
+            "name": "dezbyte/colibri-parameters",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dezbyte/colibri-parameters.git",
+                "reference": "fd44d1e8ebc005db50768a2e16de248a92bd7a78"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dezbyte/colibri-parameters/zipball/fd44d1e8ebc005db50768a2e16de248a92bd7a78",
+                "reference": "fd44d1e8ebc005db50768a2e16de248a92bd7a78",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5",
+                "symfony/yaml": "~3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Colibri\\Parameters\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Gontarenko",
+                    "email": "vania.gontarenko@gmail.com"
+                }
+            ],
+            "description": "DezPHP - Config",
+            "keywords": [
+                "config",
+                "dez-config",
+                "dez-php config",
+                "php config"
+            ],
+            "time": "2017-03-03 11:46:40"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "v3.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "9724c684646fcb5387d579b4bfaa63ee0b0c64c8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/9724c684646fcb5387d579b4bfaa63ee0b0c64c8",
+                "reference": "9724c684646fcb5387d579b4bfaa63ee0b0c64c8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "symfony/console": "~2.8|~3.0"
+            },
+            "suggest": {
+                "symfony/console": "For validating YAML files using the lint command"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Yaml\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Yaml Component",
+            "homepage": "https://symfony.com",
+            "time": "2017-02-16 22:46:52"
         }
     ],
     "packages-dev": [],

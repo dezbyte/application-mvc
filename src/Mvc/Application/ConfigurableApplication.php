@@ -2,11 +2,10 @@
 
 namespace Dez\Mvc\Application;
 
-use Dez\Config\Config;
+use Colibri\Parameters\ParametersCollection;
+use Colibri\Parameters\ParametersInterface;
 use Dez\Mvc\Application;
 use Dez\Mvc\Controller\MvcException;
-use Dez\Mvc\View\TemplateAdapter;
-use Dez\ORM\Connection;
 use Dez\Template\Template;
 
 /**
@@ -16,55 +15,63 @@ use Dez\Template\Template;
 abstract class ConfigurableApplication extends Application
 {
   
-  public function __construct(Config $config)
+  /**
+   * ConfigurableApplication constructor.
+   * @param ParametersInterface $parameters
+   */
+  public function __construct(ParametersInterface $parameters)
   {
     parent::__construct();
     
-    $this->config->merge($config);
+    $this->config->merge($parameters);
   }
   
+  /**
+   * @return $this
+   * @throws MvcException
+   */
   public function configure()
   {
     /**
-     * @var Config $serverConfig
-     * @var Config $applicationConfig
+     * @var ParametersCollection $serverConfig
+     * @var ParametersCollection $applicationConfig
      */
-    if ($this->config->has('server')) {
+    if ($this->config->offsetExists('server')) {
       $serverConfig = $this->config->get('server');
       
-      if ($serverConfig->has('timezone')) {
+      if ($serverConfig->offsetExists('timezone')) {
         date_default_timezone_set($serverConfig['timezone']);
       }
       
-      if ($serverConfig->has('displayErrors')) {
+      if ($serverConfig->offsetExists('displayErrors')) {
         ini_set('display_errors', $serverConfig['displayErrors']);
       }
       
-      if ($serverConfig->has('errorLevel')) {
+      if ($serverConfig->offsetExists('errorLevel')) {
         error_reporting($serverConfig['errorLevel']);
       }
     }
     
-    if ($this->config->has('application')) {
+    if ($this->config->offsetExists('application')) {
       $applicationConfig = $this->config->get('application');
       
-      if ($applicationConfig->has('autoload')) {
+      if ($applicationConfig->offsetExists('autoload')) {
         $this->loader->registerNamespaces($applicationConfig->get('autoload')->toArray())
           ->register();
       }
       
-      if ($applicationConfig->has('controller')) {
+      if ($applicationConfig->offsetExists('controller')) {
         $this->setControllerNamespace($applicationConfig['controller']['namespace']);
       }
       
-      if ($applicationConfig->has('base_path')) {
+      if ($applicationConfig->offsetExists('base_path')) {
         $this->url->setBasePath($applicationConfig['base_path']);
-        if ($applicationConfig->has('static_path')) {
+        if ($applicationConfig->offsetExists('static_path')) {
           $this->url->setStaticPath($applicationConfig['static_path']);
         }
       }
       
-      if ($applicationConfig->has('view')) {
+      if ($applicationConfig->offsetExists('view')) {
         $this->dependencyInjector->set('view', function () use ($applicationConfig) {
           $services = iterator_to_array($this->dependencyInjector);
           $directory = $applicationConfig['view']['root_directory'];

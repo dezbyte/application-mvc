@@ -5,8 +5,6 @@ namespace Dez\Mvc\Controller;
 use Dez\DependencyInjection\ContainerInterface;
 use Dez\DependencyInjection\InjectableInterface;
 use Dez\Mvc\InjectableAware;
-use Dez\Mvc\UrlRouteQuery\Mapper;
-use Dez\ORM\Model\QueryBuilder;
 
 interface ControllerInterface extends InjectableInterface, InjectableAware
 {
@@ -42,13 +40,6 @@ interface ControllerInterface extends InjectableInterface, InjectableAware
    * @return mixed
    */
   public function refresh();
-  
-  /**
-   * @param Mapper $mapper
-   * @param QueryBuilder $queryBuilder
-   * @return mixed
-   */
-  public function injectMapper(Mapper $mapper, QueryBuilder $queryBuilder);
   
   /**
    * @return string

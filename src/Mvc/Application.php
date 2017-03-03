@@ -2,7 +2,7 @@
 
 namespace Dez\Mvc;
 
-use Dez\Config\Config;
+use Colibri\Parameters\ParametersCollection;
 use Dez\DependencyInjection\Injectable;
 use Dez\DependencyInjection\Service;
 use Dez\Http\Response;
@@ -14,6 +14,9 @@ use Dez\Router\Router;
 class Application extends Injectable implements InjectableAware
 {
   
+  /**
+   * @var string
+   */
   protected $controllerNamespace = '\\App\\Controller\\';
   
   /**
@@ -24,15 +27,15 @@ class Application extends Injectable implements InjectableAware
     $this->setDi(FactoryContainer::instance());
   }
   
+  
   /**
-   * @return \Dez\Config\Adapter\Ini|\Dez\Config\Adapter\Json|\Dez\Config\Adapter\NativeArray|Config
-   * @throws \Dez\Config\Exception
+   * @return ParametersCollection|\Colibri\Parameters\ParametersInterface
    */
   public static function sampleConfiguration()
   {
     $configurationFilePath = realpath(__DIR__ . '/../sample.configuration.php');
     
-    $config = Config::factory($configurationFilePath);
+    $config = ParametersCollection::createFromFile($configurationFilePath);
     $config['sample_config_file'] = $configurationFilePath;
     
     return $config;
