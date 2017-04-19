@@ -73,7 +73,7 @@ class Application extends Injectable implements InjectableAware
         $content = $response->getControllerContent();
         $controller = $response->getControllerInstance();
         
-        if (null === $content && $this->response->getBodyFormat() == Response::RESPONSE_HTML) {
+        if (null === $content && $this->response->getBodyFormat() == Response::RESPONSE_HTML && $this->response->isEnableBody() === true) {
           $templatePath = "{$resolver->getController()}/{$resolver->getAction()}";
           $content = $this->render($templatePath, $controller->getPseudoPath());
         }
