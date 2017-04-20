@@ -88,11 +88,11 @@ abstract class ConfigurableApplication extends Application
   /**
    * @return $this
    */
-  abstract public function initialize();
+  abstract protected function initializeComponents();
   
   /**
    * @return $this
    */
-  abstract public function injection();
+  abstract protected function registerComponents();
   
 }
