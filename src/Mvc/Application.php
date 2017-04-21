@@ -65,26 +65,37 @@ class Application extends Injectable implements InjectableAware
       $resolver->setController($router->getController());
       $resolver->setAction($router->getAction());
       $resolver->setParams($router->getMatches());
+  
+      $this->templateInjection();
       
       try {
-        $this->prepareView();
+        
         $response = $resolver->execute();
         
-        $content = $response->getControllerContent();
-        $controller = $response->getControllerInstance();
-        
-        if (null === $content && $this->response->getBodyFormat() == Response::RESPONSE_HTML && $this->response->isEnableBody() === true) {
-          $templatePath = "{$resolver->getController()}/{$resolver->getAction()}";
-          $content = $this->render($templatePath, $controller->getPseudoPath());
+        // If content body is disabled for response, nothing to set in it
+        // Used in case with redirect, for example
+        if ($this->response->isEnableBody() === true) {
+  
+          $content = $response->getControllerContent();
+          $controller = $response->getControllerInstance();
+          
+          // Special condition for handle controller templates
+          if ($this->response->getBodyFormat() == Response::RESPONSE_HTML) {
+            // If controller action nothing return, we try render inner template
+            // controller_name/action_name.php
+            if (null === $content) {
+              $templatePath = "{$resolver->getController()}/{$resolver->getAction()}";
+              $content = $this->render($templatePath, $controller->getPseudoPath());
+            }
+            
+            // If controller has main layout trying, we try wrap in it
+            if (null !== $controller->getLayout()) {
+              $content = $this->render($controller->getLayout(), null, ['content' => $content]);
+            }
+          }
+          
+          $this->response->setContent($content);
         }
-        
-        if (null !== $controller->getLayout()) {
-          $content = $this->render($controller->getLayout(), null, [
-            'content' => $content
-          ]);
-        }
-        
-        $this->response->setContent($content);
         
         $this->event->dispatch(MvcEvent::ON_AFTER_APP_RUN, new MvcEvent($this));
       } catch (Page404Exception $exception) {
@@ -143,7 +154,7 @@ class Application extends Injectable implements InjectableAware
   /**
    * @return $this
    */
-  protected function prepareView()
+  protected function templateInjection()
   {
     /** @var Service $service */
     foreach ($this->dependencyInjector as $service) {

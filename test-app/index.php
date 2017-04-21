@@ -14,17 +14,10 @@ set_exception_handler(function (\Exception $exception) {
 });
 
 class TestApp extends ConfigurableApplication {
-
-    public function initialize()
-    {
-        return $this;
-    }
-
-    public function injection()
-    {
-        return $this;
-    }
-
+  protected function boot()
+  {
+    
+  }
 }
 
 (new TestApp(Config::factory(__DIR__ . '/config/app.php')))

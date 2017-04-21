@@ -82,17 +82,24 @@ abstract class ConfigurableApplication extends Application
       }
     }
     
+    $this->boot();
+    
     return $this;
+  }
+  
+  /**
+   * @return \Dez\Http\Response
+   */
+  public function run()
+  {
+    $this->configure();
+    
+    return parent::run();
   }
   
   /**
    * @return $this
    */
-  abstract protected function initializeComponents();
-  
-  /**
-   * @return $this
-   */
-  abstract protected function registerComponents();
+  abstract protected function boot();
   
 }
