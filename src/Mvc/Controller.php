@@ -133,7 +133,7 @@ abstract class Controller implements ControllerInterface
     $response = $resolver->execute();
     $content = $response->getControllerContent();
     
-    if ($render === true) {
+    if ($render === true && $this->response->isEnableBody() && $this->response->getBodyFormat() === Response::RESPONSE_HTML) {
       $content = $this->view->render("{$resolver->getController()}/{$resolver->getAction()}");
     }
     
